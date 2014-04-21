@@ -1,0 +1,26 @@
+{
+	"name": "wikibase/dump-store",
+	"require": {
+		"php": ">=5.5.0",
+		"ext-mysql": "*",
+		"ext-PDO": "*",
+
+		"wikibase/data-model": "<2.0,>=0.7",
+		"wikibase/database": "dev-master",
+		"wikibase/query-engine": "dev-master"
+	},
+	"require-dev": {
+		"ext-sqlite3": "*"
+	},
+	"minimum-stability": "dev",
+	"autoload": {
+		"psr-4": {
+			"Wikibase\\Dump\\Store\\": "src/"
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.1.x-dev"
+		}
+	}
+}
