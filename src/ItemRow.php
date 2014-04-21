@@ -1,8 +1,6 @@
 <?php
 
-namespace Wikibase\Dump\Store;
-
-use Wikibase\DataModel\Entity\ItemId;
+namespace QueryR\Dump\Store;
 
 /**
  * Value object representing a row in the items table.

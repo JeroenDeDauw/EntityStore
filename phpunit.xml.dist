@@ -13,7 +13,7 @@
          strict="false"
          verbose="true">
     <testsuites>
-        <testsuite name="WikibaseDumpStore">
+        <testsuite name="QueryRDumpStore">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

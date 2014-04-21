@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Wikibase\Dump\Store\Fixtures;
+namespace Tests\QueryR\Dump\Store\Fixtures;
 
 use PDO;
 

@@ -1,6 +1,7 @@
-# Wikibase Dump Store
+# QueryR Dump Store
 
-Provides persistence and basic lookup capabilities for collections of Wikibase entities.
+Provides persistence and basic lookup capabilities for collections of
+[Wikibase](http://wikiba.se) entities.
 
 ## System dependencies
 

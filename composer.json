@@ -1,5 +1,5 @@
 {
-	"name": "wikibase/dump-store",
+	"name": "queryr/dump-store",
 	"require": {
 		"php": ">=5.5.0",
 		"ext-mysql": "*",
@@ -15,7 +15,7 @@
 	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
-			"Wikibase\\Dump\\Store\\": "src/"
+			"QueryR\\Dump\\Store\\": "src/"
 		}
 	},
 	"extra": {
