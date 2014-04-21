@@ -1,6 +1,6 @@
 # Wikibase Dump Store
 
-
+Provides persistence and basic lookup capabilities for collections of Wikibase entities.
 
 ## System dependencies
 
