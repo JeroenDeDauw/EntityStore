@@ -1,6 +1,6 @@
 <?php
 
-namespace QueryR\Dump\Store;
+namespace Queryr\Dump\Store;
 
 /**
  * Value object representing a row in the items table.

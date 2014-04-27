@@ -1,6 +1,6 @@
 <?php
 
-namespace QueryR\Dump\Store;
+namespace Queryr\Dump\Store;
 
 use Wikibase\Database\QueryInterface\QueryInterface;
 

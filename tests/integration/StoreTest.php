@@ -1,17 +1,17 @@
 <?php
 
-namespace Tests\QueryR\Dump\Store;
+namespace Tests\Queryr\Dump\Store;
 
 use PDO;
-use Tests\QueryR\Dump\Store\Fixtures\TestFixtureFactory;
+use Queryr\Dump\Store\StoreInstaller;
+use Tests\Queryr\Dump\Store\Fixtures\TestFixtureFactory;
 use Wikibase\Database\PDO\PDOFactory;
 use Wikibase\Database\QueryInterface\QueryInterface;
-use QueryR\Dump\Store\ItemRow;
-use QueryR\Dump\Store\Store;
-use QueryR\Dump\Store\StoreInstaller;
+use Queryr\Dump\Store\ItemRow;
+use Queryr\Dump\Store\Store;
 
 /**
- * @covers QueryR\Dump\Store\Store
+ * @covers Queryr\Dump\Store\Store
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -88,7 +88,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 		 */
 		$newItemRow = $this->store->getItemRowByNumericItemId( '1337' );
 
-		$this->assertInstanceOf( 'QueryR\Dump\Store\ItemRow', $newItemRow );
+		$this->assertInstanceOf( 'Queryr\Dump\Store\ItemRow', $newItemRow );
 
 		$this->assertSame( $this->itemRow->getNumericItemId(), $newItemRow->getNumericItemId() );
 		$this->assertSame( $this->itemRow->getItemJson(), $newItemRow->getItemJson() );

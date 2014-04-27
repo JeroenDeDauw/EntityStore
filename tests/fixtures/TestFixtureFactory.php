@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\QueryR\Dump\Store\Fixtures;
+namespace Tests\Queryr\Dump\Store\Fixtures;
 
 use PDO;
 

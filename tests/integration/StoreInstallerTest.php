@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\QueryR\Dump\Store;
+namespace Tests\Queryr\Dump\Store;
 
 use PDO;
 use Wikibase\Database\NullTableNameFormatter;
@@ -10,11 +10,11 @@ use Wikibase\Database\Schema\TableBuilder;
 use Wikibase\Database\SQLite\SQLiteFieldSqlBuilder;
 use Wikibase\Database\SQLite\SQLiteIndexSqlBuilder;
 use Wikibase\Database\SQLite\SQLiteTableSqlBuilder;
-use QueryR\Dump\Store\Store;
-use QueryR\Dump\Store\StoreInstaller;
+use Queryr\Dump\Store\Store;
+use Queryr\Dump\Store\StoreInstaller;
 
 /**
- * @covers QueryR\Dump\Store\StoreInstaller
+ * @covers Queryr\Dump\Store\StoreInstaller
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >

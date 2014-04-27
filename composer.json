@@ -15,7 +15,7 @@
 	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
-			"QueryR\\Dump\\Store\\": "src/"
+			"Queryr\\Dump\\Store\\": "src/"
 		}
 	},
 	"extra": {

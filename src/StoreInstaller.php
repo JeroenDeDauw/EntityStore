@@ -1,6 +1,6 @@
 <?php
 
-namespace QueryR\Dump\Store;
+namespace Queryr\Dump\Store;
 
 use Wikibase\Database\Schema\Definitions\FieldDefinition;
 use Wikibase\Database\Schema\Definitions\TableDefinition;
