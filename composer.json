@@ -6,8 +6,7 @@
 		"ext-PDO": "*",
 
 		"wikibase/data-model": "<2.0,>=0.7",
-		"wikibase/database": "dev-master",
-		"wikibase/query-engine": "dev-master"
+		"wikibase/database": "dev-master"
 	},
 	"require-dev": {
 		"ext-sqlite3": "*"
