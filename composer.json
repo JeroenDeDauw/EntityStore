@@ -6,10 +6,11 @@
 		"ext-PDO": "*",
 
 		"wikibase/data-model": "<2.0,>=0.7",
-		"wikibase/database": "dev-master"
+		"doctrine/dbal": "~2.4.2"
 	},
 	"require-dev": {
-		"ext-sqlite3": "*"
+		"ext-sqlite3": "*",
+		"whatthejeff/nyancat-phpunit-resultprinter": "~1.2"
 	},
 	"minimum-stability": "dev",
 	"autoload": {

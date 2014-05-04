@@ -2,14 +2,9 @@
 
 namespace Tests\Queryr\Dump\Store;
 
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use PDO;
-use Wikibase\Database\NullTableNameFormatter;
-use Wikibase\Database\PDO\PDOEscaper;
-use Wikibase\Database\PDO\PDOTableBuilder;
-use Wikibase\Database\Schema\TableBuilder;
-use Wikibase\Database\SQLite\SQLiteFieldSqlBuilder;
-use Wikibase\Database\SQLite\SQLiteIndexSqlBuilder;
-use Wikibase\Database\SQLite\SQLiteTableSqlBuilder;
+use Tests\Queryr\Dump\Store\Fixtures\TestFixtureFactory;
 use Queryr\Dump\Store\Store;
 use Queryr\Dump\Store\StoreInstaller;
 
@@ -24,45 +19,31 @@ class StoreInstallerTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var StoreInstaller
 	 */
-	private $store;
+	private $storeInstaller;
 
 	/**
-	 * @var TableBuilder
+	 * @var AbstractSchemaManager
 	 */
-	private $tableBuilder;
+	private $schemaManager;
 
 	public function setUp() {
-		$pdo = new PDO( 'sqlite::memory:' );
-		$escaper = new PDOEscaper( $pdo );
-		$tableNameFormatter = new NullTableNameFormatter();
-
-		$this->tableBuilder = new PDOTableBuilder(
-			$pdo,
-			new SQLiteTableSqlBuilder(
-				$escaper,
-				$tableNameFormatter,
-				new SQLiteFieldSqlBuilder( $escaper ),
-				new SQLiteIndexSqlBuilder( $escaper, $tableNameFormatter )
-			),
-			$tableNameFormatter,
-			$escaper
-		);
-
-		$this->store = new StoreInstaller( $this->tableBuilder );
+		$connection = TestFixtureFactory::newInstance()->newConnection();
+		$this->schemaManager = $connection->getSchemaManager();
+		$this->storeInstaller = new StoreInstaller( $this->schemaManager  );
 	}
 
 	public function testInstallationAndRemoval() {
-		$this->store->install();
+		$this->storeInstaller->install();
 
-		$this->assertTrue( $this->tableBuilder->tableExists( Store::ITEMS_TABLE_NAME ) );
+		$this->assertTrue( $this->schemaManager->tablesExist( Store::ITEMS_TABLE_NAME ) );
 
-		$this->store->uninstall();
+		$this->storeInstaller->uninstall();
 
-		$this->assertFalse( $this->tableBuilder->tableExists( Store::ITEMS_TABLE_NAME ) );
+		$this->assertFalse( $this->schemaManager->tablesExist( Store::ITEMS_TABLE_NAME ) );
 	}
 
 	public function testStoresPage() {
-		$this->store->install();
+		$this->storeInstaller->install();
 	}
 
 }

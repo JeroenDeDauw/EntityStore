@@ -2,22 +2,20 @@
 
 namespace Tests\Queryr\Dump\Store\Fixtures;
 
+use Doctrine\DBAL\DriverManager;
 use PDO;
 
 class TestFixtureFactory {
-
-	const DB_NAME = 'dump_store_tests';
 
 	public static function newInstance() {
 		return new self();
 	}
 
-	public function newPDO() {
-		return new PDO(
-			'mysql:dbname=' . self::DB_NAME . ';host=localhost',
-			'dstore_tester',
-			'mysql_is_evil'
-		);
+	public function newConnection() {
+		return DriverManager::getConnection( array(
+			'driver' => 'pdo_sqlite',
+			'memory' => true,
+		) );
 	}
 
 }

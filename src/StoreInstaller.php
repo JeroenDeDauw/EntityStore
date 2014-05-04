@@ -2,10 +2,9 @@
 
 namespace Queryr\Dump\Store;
 
-use Wikibase\Database\Schema\Definitions\FieldDefinition;
-use Wikibase\Database\Schema\Definitions\TableDefinition;
-use Wikibase\Database\Schema\Definitions\TypeDefinition;
-use Wikibase\Database\Schema\TableBuilder;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * @licence GNU GPL v2+
@@ -13,48 +12,35 @@ use Wikibase\Database\Schema\TableBuilder;
  */
 class StoreInstaller {
 
-	private $tableBuilder;
+	private $schemaManager;
 
-	public function __construct( TableBuilder $tableBuilder ) {
-		$this->tableBuilder = $tableBuilder;
+	public function __construct( AbstractSchemaManager $schemaManager ) {
+		$this->schemaManager = $schemaManager;
 	}
 
 	public function install() {
-		$this->tableBuilder->createTable( new TableDefinition(
-			Store::ITEMS_TABLE_NAME,
-			array(
-				new FieldDefinition(
-					'item_id',
-					TypeDefinition::TYPE_BIGINT
-				),
-				new FieldDefinition(
-					'item_json',
-					TypeDefinition::TYPE_BLOB
-				),
-				new FieldDefinition(
-					'page_title',
-					new TypeDefinition(
-						TypeDefinition::TYPE_VARCHAR,
-						255
-					)
-				),
-				new FieldDefinition(
-					'revision_id',
-					TypeDefinition::TYPE_BIGINT
-				),
-				new FieldDefinition(
-					'revision_time',
-					new TypeDefinition(
-						TypeDefinition::TYPE_VARCHAR,
-						25
-					)
-				),
-			)
-		) );
+		$this->schemaManager->createTable( $this->newTable() );
+	}
+
+	private function newTable() {
+		$table = new Table( Store::ITEMS_TABLE_NAME );
+
+		$table->addColumn( 'item_id', Type::BIGINT );
+		$table->addColumn( 'item_json', Type::BLOB );
+		$table->addColumn( 'page_title', Type::STRING, array( 'length' => 255 ) );
+		$table->addColumn( 'revision_id', Type::BIGINT );
+		$table->addColumn( 'revision_time', Type::STRING, array( 'length' => 25 ) );
+
+		$table->addIndex( array( 'item_id' ) );
+		$table->addIndex( array( 'page_title' ) );
+		$table->addIndex( array( 'revision_id' ) );
+		$table->addIndex( array( 'revision_time' ) );
+
+		return $table;
 	}
 
 	public function uninstall() {
-		$this->tableBuilder->dropTable( Store::ITEMS_TABLE_NAME );
+		$this->schemaManager->dropTable( Store::ITEMS_TABLE_NAME );
 	}
 
 }

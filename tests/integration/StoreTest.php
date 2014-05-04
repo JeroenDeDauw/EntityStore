@@ -19,16 +19,6 @@ use Queryr\Dump\Store\Store;
 class StoreTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var PDO
-	 */
-	private $pdo;
-
-	/**
-	 * @var QueryInterface
-	 */
-	private $queryInterface;
-
-	/**
 	 * @var Store
 	 */
 	private $store;
@@ -39,35 +29,17 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 	private $itemRow;
 
 	public function setUp() {
-		$this->createPDO();
 		$this->createStore();
 		$this->createItemRowField();
 	}
 
-	private function createPDO() {
-		try {
-			$this->pdo = TestFixtureFactory::newInstance()->newPDO();
-		}
-		catch ( \PDOException $ex ) {
-			$this->markTestSkipped( 'Test not run, presumably the database is not set up: ' . $ex->getMessage() );
-		}
-	}
-
 	private function createStore() {
-		$factory = new PDOFactory( $this->pdo );
+		$connection = TestFixtureFactory::newInstance()->newConnection();
 
-		$this->queryInterface = $factory->newMySQLQueryInterface();
-
-		$tableBuilder = $factory->newMySQLTableBuilder( TestFixtureFactory::DB_NAME );
-
-		$installer = new StoreInstaller( $tableBuilder );
-		$this->store = new Store( $this->queryInterface );
-
-		if ( $tableBuilder->tableExists( Store::ITEMS_TABLE_NAME ) ) {
-			$installer->uninstall();
-		}
-
+		$installer = new StoreInstaller( $connection->getSchemaManager() );
 		$installer->install();
+
+		$this->store = new Store( $connection );
 	}
 
 	private function createItemRowField() {

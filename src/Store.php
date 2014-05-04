@@ -2,7 +2,7 @@
 
 namespace Queryr\Dump\Store;
 
-use Wikibase\Database\QueryInterface\QueryInterface;
+use Doctrine\DBAL\Connection;
 
 /**
  * @licence GNU GPL v2+
@@ -12,17 +12,17 @@ class Store {
 
 	const ITEMS_TABLE_NAME = 'items';
 
-	private $queryInterface;
+	private $connection;
 
-	public function __construct( QueryInterface $queryInterface ) {
-		$this->queryInterface = $queryInterface;
+	public function __construct( Connection $connection ) {
+		$this->connection = $connection;
 	}
 
 	/**
 	 * @param ItemRow $itemRow
 	 */
 	public function storeItemRow( ItemRow $itemRow ) {
-		$this->queryInterface->insert(
+		$this->connection->insert(
 			self::ITEMS_TABLE_NAME,
 			array(
 				'item_id' => $itemRow->getNumericItemId(),
@@ -40,19 +40,19 @@ class Store {
 	 * @return ItemRow|null
 	 */
 	public function getItemRowByNumericItemId( $numericItemId ) {
-		$rows = $this->queryInterface->select(
-			self::ITEMS_TABLE_NAME,
-			array(
-				'item_id',
-				'item_json',
-				'page_title',
-				'revision_id',
-				'revision_time'
-			),
-			array(
-				'item_id' => (int)$numericItemId
+		$queryBuilder = $this->connection->createQueryBuilder();
+
+		$rows = $queryBuilder->select(
+			't.item_id',
+			't.item_json',
+			't.page_title',
+			't.revision_id',
+			't.revision_time'
 			)
-		);
+			->from( self::ITEMS_TABLE_NAME, 't' )
+			->where( 't.item_id = ?' )
+			->setParameter( 0, (int)$numericItemId )
+			->execute();
 
 		$rows = iterator_to_array( $rows );
 
@@ -63,11 +63,11 @@ class Store {
 		$row = reset( $rows );
 
 		return new ItemRow(
-			$row->item_id,
-			$row->item_json,
-			$row->page_title,
-			$row->revision_id,
-			$row->revision_time
+			$row['item_id'],
+			$row['item_json'],
+			$row['page_title'],
+			$row['revision_id'],
+			$row['revision_time']
 		);
 	}
 
