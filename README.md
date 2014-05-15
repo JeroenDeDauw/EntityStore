@@ -22,3 +22,9 @@ Running the tests
 Removing the test database
 
     mysql --user root -p < tests/dropTestDB.sql
+
+## Release notes
+
+### Version 0.1 (2014-05-15)
+
+* Initial release
