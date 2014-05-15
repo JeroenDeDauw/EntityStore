@@ -57,7 +57,7 @@ class Store {
 		$rows = iterator_to_array( $rows );
 
 		if ( count( $rows ) < 1 ) {
-			return false;
+			return null;
 		}
 
 		$row = reset( $rows );

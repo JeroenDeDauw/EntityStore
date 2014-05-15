@@ -5,7 +5,6 @@
 		"ext-mysql": "*",
 		"ext-PDO": "*",
 
-		"wikibase/data-model": "<2.0,>=0.7",
 		"doctrine/dbal": "~2.4.2"
 	},
 	"require-dev": {

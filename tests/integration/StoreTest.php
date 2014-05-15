@@ -18,6 +18,8 @@ use Queryr\Dump\Store\Store;
  */
 class StoreTest extends \PHPUnit_Framework_TestCase {
 
+	const ITEM_ID = '1337';
+
 	/**
 	 * @var Store
 	 */
@@ -44,7 +46,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 
 	private function createItemRowField() {
 		$this->itemRow = new ItemRow(
-			'1337',
+			self::ITEM_ID,
 			'json be here',
 			'Item:Q1337',
 			'424242',
@@ -58,7 +60,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 		/**
 		 * @var ItemRow $newItemRow
 		 */
-		$newItemRow = $this->store->getItemRowByNumericItemId( '1337' );
+		$newItemRow = $this->store->getItemRowByNumericItemId( self::ITEM_ID );
 
 		$this->assertInstanceOf( 'Queryr\Dump\Store\ItemRow', $newItemRow );
 
@@ -67,6 +69,10 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( $this->itemRow->getPageTitle(), $newItemRow->getPageTitle() );
 		$this->assertSame( $this->itemRow->getRevisionId(), $newItemRow->getRevisionId() );
 		$this->assertSame( $this->itemRow->getRevisionTime(), $newItemRow->getRevisionTime() );
+	}
+
+	public function testGivenNotKnownId_getItemRowByNumericItemIdReturnsNull() {
+		$this->assertNull( $this->store->getItemRowByNumericItemId( '32202' ) );
 	}
 
 }
