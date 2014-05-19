@@ -54,19 +54,22 @@ class Store {
 	 * @return ItemRow|null
 	 */
 	public function getItemRowByNumericItemId( $numericItemId ) {
-		$rows = $this->connection->createQueryBuilder()->select(
-			't.item_id',
-			't.item_json',
-			't.page_title',
-			't.revision_id',
-			't.revision_time'
-			)
-			->from( self::ITEMS_TABLE_NAME, 't' )
+		$rows = $this->selectItems()
 			->where( 't.item_id = ?' )
 			->setParameter( 0, (int)$numericItemId )
 			->execute();
 
 		return $this->newItemRowFromResult( $rows );
+	}
+
+	private function selectItems() {
+		return $this->connection->createQueryBuilder()->select(
+			't.item_id',
+			't.item_json',
+			't.page_title',
+			't.revision_id',
+			't.revision_time'
+		)->from( self::ITEMS_TABLE_NAME, 't' );
 	}
 
 	private function newItemRowFromResult( \Traversable $rows ) {
@@ -93,20 +96,23 @@ class Store {
 	 * @return PropertyRow|null
 	 */
 	public function getPropertyRowByNumericPropertyId( $numericPropertyId ) {
-		$rows = $this->connection->createQueryBuilder()->select(
+		$rows = $this->selectProperties()
+			->where( 't.property_id = ?' )
+			->setParameter( 0, (int)$numericPropertyId )
+			->execute();
+
+		return $this->newPropertyRowFromResult( $rows );
+	}
+
+	private function selectProperties() {
+		return $this->connection->createQueryBuilder()->select(
 			't.property_id',
 			't.property_json',
 			't.page_title',
 			't.revision_id',
 			't.revision_time',
 			't.property_type'
-		)
-			->from( self::PROPERTIES_TABLE_NAME, 't' )
-			->where( 't.property_id = ?' )
-			->setParameter( 0, (int)$numericPropertyId )
-			->execute();
-
-		return $this->newPropertyRowFromResult( $rows );
+		)->from( self::PROPERTIES_TABLE_NAME, 't' );
 	}
 
 	private function newPropertyRowFromResult( \Traversable $rows ) {
