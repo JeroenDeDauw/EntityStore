@@ -3,6 +3,7 @@
 namespace Tests\Queryr\Dump\Store;
 
 use PDO;
+use Queryr\Dump\Store\PropertyRow;
 use Queryr\Dump\Store\StoreInstaller;
 use Tests\Queryr\Dump\Store\Fixtures\TestFixtureFactory;
 use Wikibase\Database\PDO\PDOFactory;
@@ -19,6 +20,7 @@ use Queryr\Dump\Store\Store;
 class StoreTest extends \PHPUnit_Framework_TestCase {
 
 	const ITEM_ID = '1337';
+	const PROPERTY_ID = '42';
 
 	/**
 	 * @var Store
@@ -30,9 +32,15 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $itemRow;
 
+	/**
+	 * @var PropertyRow
+	 */
+	private $propertyRow;
+
 	public function setUp() {
 		$this->createStore();
 		$this->createItemRowField();
+		$this->createPropertyRowField();
 	}
 
 	private function createStore() {
@@ -54,12 +62,20 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 		);
 	}
 
-	public function testStoresPage() {
+	private function createPropertyRowField() {
+		$this->propertyRow = new PropertyRow(
+			self::PROPERTY_ID,
+			'json be here',
+			'Property:P42',
+			'424242',
+			'2014-02-27T11:40:12Z',
+			'string'
+		);
+	}
+
+	public function testCanStoreAndRetrieveItemPage() {
 		$this->store->storeItemRow( $this->itemRow );
 
-		/**
-		 * @var ItemRow $newItemRow
-		 */
 		$newItemRow = $this->store->getItemRowByNumericItemId( self::ITEM_ID );
 
 		$this->assertInstanceOf( 'Queryr\Dump\Store\ItemRow', $newItemRow );
@@ -73,6 +89,25 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testGivenNotKnownId_getItemRowByNumericItemIdReturnsNull() {
 		$this->assertNull( $this->store->getItemRowByNumericItemId( '32202' ) );
+	}
+
+	public function testCanStoreAndRetrievePropertyPage() {
+		$this->store->storePropertyRow( $this->propertyRow );
+
+		$newPropertyRow = $this->store->getPropertyRowByNumericPropertyId( self::PROPERTY_ID );
+
+		$this->assertInstanceOf( 'Queryr\Dump\Store\PropertyRow', $newPropertyRow );
+
+		$this->assertSame( $this->propertyRow->getNumericPropertyId(), $newPropertyRow->getNumericPropertyId() );
+		$this->assertSame( $this->propertyRow->getPropertyJson(), $newPropertyRow->getPropertyJson() );
+		$this->assertSame( $this->propertyRow->getPageTitle(), $newPropertyRow->getPageTitle() );
+		$this->assertSame( $this->propertyRow->getRevisionId(), $newPropertyRow->getRevisionId() );
+		$this->assertSame( $this->propertyRow->getRevisionTime(), $newPropertyRow->getRevisionTime() );
+		$this->assertSame( $this->propertyRow->getPropertyType(), $newPropertyRow->getPropertyType() );
+	}
+
+	public function testGivenNotKnownId_getPropertyRowByNumericPropertyIdReturnsNull() {
+		$this->assertNull( $this->store->getPropertyRowByNumericPropertyId( '32202' ) );
 	}
 
 }

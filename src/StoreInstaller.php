@@ -2,6 +2,7 @@
 
 namespace Queryr\Dump\Store;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
@@ -18,11 +19,15 @@ class StoreInstaller {
 		$this->schemaManager = $schemaManager;
 	}
 
+	/**
+	 * @throws DBALException
+	 */
 	public function install() {
-		$this->schemaManager->createTable( $this->newTable() );
+		$this->schemaManager->createTable( $this->newItemTable() );
+		$this->schemaManager->createTable( $this->newPropertyTable() );
 	}
 
-	private function newTable() {
+	private function newItemTable() {
 		$table = new Table( Store::ITEMS_TABLE_NAME );
 
 		$table->addColumn( 'item_id', Type::BIGINT );
@@ -39,8 +44,28 @@ class StoreInstaller {
 		return $table;
 	}
 
+	private function newPropertyTable() {
+		$table = new Table( Store::PROPERTIES_TABLE_NAME );
+
+		$table->addColumn( 'property_id', Type::BIGINT );
+		$table->addColumn( 'property_json', Type::BLOB );
+		$table->addColumn( 'page_title', Type::STRING, array( 'length' => 255 ) );
+		$table->addColumn( 'revision_id', Type::BIGINT );
+		$table->addColumn( 'revision_time', Type::STRING, array( 'length' => 25 ) );
+		$table->addColumn( 'property_type', Type::STRING, array( 'length' => 30 ) );
+
+		$table->addIndex( array( 'property_id' ) );
+		$table->addIndex( array( 'page_title' ) );
+		$table->addIndex( array( 'revision_id' ) );
+		$table->addIndex( array( 'revision_time' ) );
+		$table->addIndex( array( 'property_type' ) );
+
+		return $table;
+	}
+
 	public function uninstall() {
 		$this->schemaManager->dropTable( Store::ITEMS_TABLE_NAME );
+		$this->schemaManager->dropTable( Store::PROPERTIES_TABLE_NAME );
 	}
 
 }
