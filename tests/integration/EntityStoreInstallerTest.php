@@ -5,18 +5,18 @@ namespace Tests\Queryr\EntityStore;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 use Queryr\EntityStore\EntityStore;
-use Queryr\EntityStore\StoreInstaller;
+use Queryr\EntityStore\EntityStoreInstaller;
 
 /**
- * @covers Queryr\EntityStore\StoreInstaller
+ * @covers Queryr\EntityStore\EntityStoreInstaller
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class StoreInstallerTest extends \PHPUnit_Framework_TestCase {
+class EntityStoreInstallerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var StoreInstaller
+	 * @var EntityStoreInstaller
 	 */
 	private $storeInstaller;
 
@@ -28,7 +28,7 @@ class StoreInstallerTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$connection = TestFixtureFactory::newInstance()->newConnection();
 		$this->schemaManager = $connection->getSchemaManager();
-		$this->storeInstaller = new StoreInstaller( $this->schemaManager  );
+		$this->storeInstaller = new EntityStoreInstaller( $this->schemaManager  );
 	}
 
 	public function testInstallationAndRemoval() {

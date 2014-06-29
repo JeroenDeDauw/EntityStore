@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\Type;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class StoreInstaller {
+class EntityStoreInstaller {
 
 	private $schemaManager;
 

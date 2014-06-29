@@ -3,7 +3,7 @@
 namespace Tests\Queryr\EntityStore;
 
 use Queryr\EntityStore\PropertyRow;
-use Queryr\EntityStore\StoreInstaller;
+use Queryr\EntityStore\EntityStoreInstaller;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 use Queryr\EntityStore\ItemRow;
 use Queryr\EntityStore\EntityStore;
@@ -43,7 +43,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	private function createStore() {
 		$connection = TestFixtureFactory::newInstance()->newConnection();
 
-		$installer = new StoreInstaller( $connection->getSchemaManager() );
+		$installer = new EntityStoreInstaller( $connection->getSchemaManager() );
 		$installer->install();
 
 		$this->store = new EntityStore( $connection );
