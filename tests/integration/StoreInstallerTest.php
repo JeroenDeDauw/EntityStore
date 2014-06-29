@@ -1,15 +1,14 @@
 <?php
 
-namespace Tests\Queryr\Dump\Store;
+namespace Tests\Queryr\EntityStore;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
-use PDO;
-use Tests\Queryr\Dump\Store\Fixtures\TestFixtureFactory;
-use Queryr\Dump\Store\Store;
-use Queryr\Dump\Store\StoreInstaller;
+use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
+use Queryr\EntityStore\Store;
+use Queryr\EntityStore\StoreInstaller;
 
 /**
- * @covers Queryr\Dump\Store\StoreInstaller
+ * @covers Queryr\EntityStore\StoreInstaller
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >

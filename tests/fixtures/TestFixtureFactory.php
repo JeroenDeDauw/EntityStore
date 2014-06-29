@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Queryr\Dump\Store\Fixtures;
+namespace Tests\Queryr\EntityStore\Fixtures;
 
 use Doctrine\DBAL\DriverManager;
 use PDO;

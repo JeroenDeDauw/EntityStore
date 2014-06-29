@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\Queryr\Dump\Store;
+namespace Tests\Queryr\EntityStore;
 
 use PDO;
-use Queryr\Dump\Store\PropertyRow;
-use Queryr\Dump\Store\StoreInstaller;
-use Tests\Queryr\Dump\Store\Fixtures\TestFixtureFactory;
+use Queryr\EntityStore\PropertyRow;
+use Queryr\EntityStore\StoreInstaller;
+use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 use Wikibase\Database\PDO\PDOFactory;
 use Wikibase\Database\QueryInterface\QueryInterface;
-use Queryr\Dump\Store\ItemRow;
-use Queryr\Dump\Store\Store;
+use Queryr\EntityStore\ItemRow;
+use Queryr\EntityStore\Store;
 
 /**
- * @covers Queryr\Dump\Store\Store
+ * @covers Queryr\EntityStore\Store
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -78,7 +78,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 
 		$newItemRow = $this->store->getItemRowByNumericItemId( self::ITEM_ID );
 
-		$this->assertInstanceOf( 'Queryr\Dump\Store\ItemRow', $newItemRow );
+		$this->assertInstanceOf( 'Queryr\EntityStore\ItemRow', $newItemRow );
 
 		$this->assertSame( $this->itemRow->getNumericItemId(), $newItemRow->getNumericItemId() );
 		$this->assertSame( $this->itemRow->getItemJson(), $newItemRow->getItemJson() );
@@ -96,7 +96,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 
 		$newPropertyRow = $this->store->getPropertyRowByNumericPropertyId( self::PROPERTY_ID );
 
-		$this->assertInstanceOf( 'Queryr\Dump\Store\PropertyRow', $newPropertyRow );
+		$this->assertInstanceOf( 'Queryr\EntityStore\PropertyRow', $newPropertyRow );
 
 		$this->assertSame( $this->propertyRow->getNumericPropertyId(), $newPropertyRow->getNumericPropertyId() );
 		$this->assertSame( $this->propertyRow->getPropertyJson(), $newPropertyRow->getPropertyJson() );

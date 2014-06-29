@@ -1,5 +1,5 @@
 {
-	"name": "queryr/dump-store",
+	"name": "queryr/entity-store",
 	"require": {
 		"php": ">=5.5.0",
 		"ext-mysql": "*",
@@ -13,7 +13,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Queryr\\Dump\\Store\\": "src/"
+			"Queryr\\EntityStore\\": "src/"
 		}
 	},
 	"extra": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Queryr\Dump\Store;
+namespace Queryr\EntityStore;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;

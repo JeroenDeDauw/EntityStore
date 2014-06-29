@@ -1,4 +1,4 @@
-# QueryR Dump Store
+# QueryR Entity Store
 
 Provides persistence and basic lookup capabilities for collections of
 [Wikibase](http://wikiba.se) entities.
@@ -11,17 +11,9 @@ Provides persistence and basic lookup capabilities for collections of
 
 ## Running the tests
 
-Before running the tests
-
-    mysql --user root -p < tests/createTestDB.sql
-
 Running the tests
 
     phpunit
-
-Removing the test database
-
-    mysql --user root -p < tests/dropTestDB.sql
 
 ## Release notes
 

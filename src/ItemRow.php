@@ -1,6 +1,6 @@
 <?php
 
-namespace Queryr\Dump\Store;
+namespace Queryr\EntityStore;
 
 /**
  * Value object representing a row in the items table.
