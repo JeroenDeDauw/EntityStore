@@ -14,9 +14,11 @@ use Doctrine\DBAL\Types\Type;
 class EntityStoreInstaller {
 
 	private $schemaManager;
+	private $config;
 
-	public function __construct( AbstractSchemaManager $schemaManager ) {
+	public function __construct( AbstractSchemaManager $schemaManager, EntityStoreConfig $config ) {
 		$this->schemaManager = $schemaManager;
+		$this->config = $config;
 	}
 
 	/**
@@ -28,7 +30,7 @@ class EntityStoreInstaller {
 	}
 
 	private function newItemTable() {
-		$table = new Table( EntityStore::ITEMS_TABLE_NAME );
+		$table = new Table( $this->config->getItemTableName() );
 
 		$table->addColumn( 'item_id', Type::BIGINT );
 		$table->addColumn( 'item_json', Type::BLOB );
@@ -45,7 +47,7 @@ class EntityStoreInstaller {
 	}
 
 	private function newPropertyTable() {
-		$table = new Table( EntityStore::PROPERTIES_TABLE_NAME );
+		$table = new Table( $this->config->getPropertyTableName() );
 
 		$table->addColumn( 'property_id', Type::BIGINT );
 		$table->addColumn( 'property_json', Type::BLOB );
@@ -64,8 +66,8 @@ class EntityStoreInstaller {
 	}
 
 	public function uninstall() {
-		$this->schemaManager->dropTable( EntityStore::ITEMS_TABLE_NAME );
-		$this->schemaManager->dropTable( EntityStore::PROPERTIES_TABLE_NAME );
+		$this->schemaManager->dropTable( $this->config->getItemTableName() );
+		$this->schemaManager->dropTable( $this->config->getPropertyTableName() );
 	}
 
 }

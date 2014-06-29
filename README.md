@@ -22,6 +22,8 @@ Running the tests
 * Renamed package from `queryr/dump-store` to `queryr/entity-store`
 * Renamed `Store` class to `EntityStore`
 * Renamed `StoreInstaller` class to `EntityStoreInstaller`
+* `EntityStore` now requires an instance of `EntityStoreConfig` in its constructor
+* `EntityStoreInstaller` now requires an instance of `EntityStoreConfig` in its constructor
 
 ### Version 0.1 (2014-05-15)
 

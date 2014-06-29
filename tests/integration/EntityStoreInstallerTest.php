@@ -3,8 +3,8 @@
 namespace Tests\Queryr\EntityStore;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use Queryr\EntityStore\EntityStoreConfig;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
-use Queryr\EntityStore\EntityStore;
 use Queryr\EntityStore\EntityStoreInstaller;
 
 /**
@@ -28,17 +28,23 @@ class EntityStoreInstallerTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$connection = TestFixtureFactory::newInstance()->newConnection();
 		$this->schemaManager = $connection->getSchemaManager();
-		$this->storeInstaller = new EntityStoreInstaller( $this->schemaManager  );
+
+		$this->storeInstaller = new EntityStoreInstaller(
+			$this->schemaManager,
+			new EntityStoreConfig( 'kittens_' )
+		);
 	}
 
 	public function testInstallationAndRemoval() {
 		$this->storeInstaller->install();
 
-		$this->assertTrue( $this->schemaManager->tablesExist( EntityStore::ITEMS_TABLE_NAME ) );
+		$this->assertTrue( $this->schemaManager->tablesExist( 'kittens_items' ) );
+		$this->assertTrue( $this->schemaManager->tablesExist( 'kittens_properties' ) );
 
 		$this->storeInstaller->uninstall();
 
-		$this->assertFalse( $this->schemaManager->tablesExist( EntityStore::ITEMS_TABLE_NAME ) );
+		$this->assertFalse( $this->schemaManager->tablesExist( 'kittens_items' ) );
+		$this->assertFalse( $this->schemaManager->tablesExist( 'kittens_properties' ) );
 	}
 
 	public function testStoresPage() {

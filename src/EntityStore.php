@@ -10,18 +10,17 @@ use Doctrine\DBAL\Connection;
  */
 class EntityStore {
 
-	const ITEMS_TABLE_NAME = 'items';
-	const PROPERTIES_TABLE_NAME = 'properties';
-
 	private $connection;
+	private $config;
 
-	public function __construct( Connection $connection ) {
+	public function __construct( Connection $connection, EntityStoreConfig $config ) {
 		$this->connection = $connection;
+		$this->config = $config;
 	}
 
 	public function storeItemRow( ItemRow $itemRow ) {
 		$this->connection->insert(
-			self::ITEMS_TABLE_NAME,
+			$this->config->getItemTableName(),
 			array(
 				'item_id' => $itemRow->getNumericItemId(),
 				'item_json' => $itemRow->getItemJson(),
@@ -35,7 +34,7 @@ class EntityStore {
 
 	public function storePropertyRow( PropertyRow $propertyRow ) {
 		$this->connection->insert(
-			self::PROPERTIES_TABLE_NAME,
+			$this->config->getPropertyTableName(),
 			array(
 				'property_id' => $propertyRow->getNumericPropertyId(),
 				'property_json' => $propertyRow->getPropertyJson(),
@@ -69,7 +68,7 @@ class EntityStore {
 			't.page_title',
 			't.revision_id',
 			't.revision_time'
-		)->from( self::ITEMS_TABLE_NAME, 't' );
+		)->from( $this->config->getItemTableName(), 't' );
 	}
 
 	private function newItemRowFromResult( \Traversable $rows ) {
@@ -112,7 +111,7 @@ class EntityStore {
 			't.revision_id',
 			't.revision_time',
 			't.property_type'
-		)->from( self::PROPERTIES_TABLE_NAME, 't' );
+		)->from( $this->config->getPropertyTableName(), 't' );
 	}
 
 	private function newPropertyRowFromResult( \Traversable $rows ) {
