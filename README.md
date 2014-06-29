@@ -17,7 +17,7 @@ Running the tests
 
 ## Release notes
 
-### Version 0.2 (dev)
+### Version 0.2 (2014-06-29)
 
 * Renamed package from `queryr/dump-store` to `queryr/entity-store`
 * Renamed `Store` class to `EntityStore`
