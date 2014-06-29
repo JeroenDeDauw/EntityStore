@@ -28,7 +28,7 @@ class StoreInstaller {
 	}
 
 	private function newItemTable() {
-		$table = new Table( Store::ITEMS_TABLE_NAME );
+		$table = new Table( EntityStore::ITEMS_TABLE_NAME );
 
 		$table->addColumn( 'item_id', Type::BIGINT );
 		$table->addColumn( 'item_json', Type::BLOB );
@@ -45,7 +45,7 @@ class StoreInstaller {
 	}
 
 	private function newPropertyTable() {
-		$table = new Table( Store::PROPERTIES_TABLE_NAME );
+		$table = new Table( EntityStore::PROPERTIES_TABLE_NAME );
 
 		$table->addColumn( 'property_id', Type::BIGINT );
 		$table->addColumn( 'property_json', Type::BLOB );
@@ -64,8 +64,8 @@ class StoreInstaller {
 	}
 
 	public function uninstall() {
-		$this->schemaManager->dropTable( Store::ITEMS_TABLE_NAME );
-		$this->schemaManager->dropTable( Store::PROPERTIES_TABLE_NAME );
+		$this->schemaManager->dropTable( EntityStore::ITEMS_TABLE_NAME );
+		$this->schemaManager->dropTable( EntityStore::PROPERTIES_TABLE_NAME );
 	}
 
 }

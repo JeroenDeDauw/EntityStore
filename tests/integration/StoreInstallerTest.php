@@ -4,7 +4,7 @@ namespace Tests\Queryr\EntityStore;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
-use Queryr\EntityStore\Store;
+use Queryr\EntityStore\EntityStore;
 use Queryr\EntityStore\StoreInstaller;
 
 /**
@@ -34,11 +34,11 @@ class StoreInstallerTest extends \PHPUnit_Framework_TestCase {
 	public function testInstallationAndRemoval() {
 		$this->storeInstaller->install();
 
-		$this->assertTrue( $this->schemaManager->tablesExist( Store::ITEMS_TABLE_NAME ) );
+		$this->assertTrue( $this->schemaManager->tablesExist( EntityStore::ITEMS_TABLE_NAME ) );
 
 		$this->storeInstaller->uninstall();
 
-		$this->assertFalse( $this->schemaManager->tablesExist( Store::ITEMS_TABLE_NAME ) );
+		$this->assertFalse( $this->schemaManager->tablesExist( EntityStore::ITEMS_TABLE_NAME ) );
 	}
 
 	public function testStoresPage() {

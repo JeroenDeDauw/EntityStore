@@ -8,7 +8,7 @@ use Doctrine\DBAL\Connection;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class Store {
+class EntityStore {
 
 	const ITEMS_TABLE_NAME = 'items';
 	const PROPERTIES_TABLE_NAME = 'properties';

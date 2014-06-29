@@ -2,28 +2,25 @@
 
 namespace Tests\Queryr\EntityStore;
 
-use PDO;
 use Queryr\EntityStore\PropertyRow;
 use Queryr\EntityStore\StoreInstaller;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
-use Wikibase\Database\PDO\PDOFactory;
-use Wikibase\Database\QueryInterface\QueryInterface;
 use Queryr\EntityStore\ItemRow;
-use Queryr\EntityStore\Store;
+use Queryr\EntityStore\EntityStore;
 
 /**
- * @covers Queryr\EntityStore\Store
+ * @covers Queryr\EntityStore\EntityStore
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class StoreTest extends \PHPUnit_Framework_TestCase {
+class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 	const ITEM_ID = '1337';
 	const PROPERTY_ID = '42';
 
 	/**
-	 * @var Store
+	 * @var EntityStore
 	 */
 	private $store;
 
@@ -49,7 +46,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase {
 		$installer = new StoreInstaller( $connection->getSchemaManager() );
 		$installer->install();
 
-		$this->store = new Store( $connection );
+		$this->store = new EntityStore( $connection );
 	}
 
 	private function createItemRowField() {
