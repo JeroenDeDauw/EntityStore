@@ -5,7 +5,7 @@
 		"ext-mysql": "*",
 		"ext-PDO": "*",
 
-		"doctrine/dbal": "~2.4.2"
+		"doctrine/dbal": "~2.4"
 	},
 	"require-dev": {
 		"ext-sqlite3": "*",
