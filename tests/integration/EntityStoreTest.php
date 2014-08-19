@@ -35,7 +35,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $propertyRow;
 
-	public function setUp() {
+	private function createAndFillStore() {
 		$this->createStore();
 		$this->createItemRowField();
 		$this->createPropertyRowField();
@@ -73,6 +73,8 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanStoreAndRetrieveItemPage() {
+		$this->createAndFillStore();
+
 		$this->store->storeItemRow( $this->itemRow );
 
 		$newItemRow = $this->store->getItemRowByNumericItemId( self::ITEM_ID );
@@ -87,10 +89,13 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGivenNotKnownId_getItemRowByNumericItemIdReturnsNull() {
+		$this->createAndFillStore();
 		$this->assertNull( $this->store->getItemRowByNumericItemId( '32202' ) );
 	}
 
 	public function testCanStoreAndRetrievePropertyPage() {
+		$this->createAndFillStore();
+
 		$this->store->storePropertyRow( $this->propertyRow );
 
 		$newPropertyRow = $this->store->getPropertyRowByNumericPropertyId( self::PROPERTY_ID );
@@ -106,6 +111,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGivenNotKnownId_getPropertyRowByNumericPropertyIdReturnsNull() {
+		$this->createAndFillStore();
 		$this->assertNull( $this->store->getPropertyRowByNumericPropertyId( '32202' ) );
 	}
 
