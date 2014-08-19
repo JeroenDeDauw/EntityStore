@@ -20,6 +20,7 @@ Running the tests
 ### Version 0.3 (2014-08-20)
 
 * Added `EntityStoreException`
+* All `EntityStore` methods now throw exceptions of type `EntityStoreException`
 
 ### Version 0.2 (2014-06-29)
 

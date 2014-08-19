@@ -3,6 +3,7 @@
 namespace Queryr\EntityStore;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 
 /**
  * @licence GNU GPL v2+
@@ -19,44 +20,60 @@ class EntityStore {
 	}
 
 	public function storeItemRow( ItemRow $itemRow ) {
-		$this->connection->insert(
-			$this->config->getItemTableName(),
-			array(
-				'item_id' => $itemRow->getNumericItemId(),
-				'item_json' => $itemRow->getItemJson(),
+		try {
+			$this->connection->insert(
+				$this->config->getItemTableName(),
+				array(
+					'item_id' => $itemRow->getNumericItemId(),
+					'item_json' => $itemRow->getItemJson(),
 
-				'page_title' => $itemRow->getPageTitle(),
-				'revision_id' => $itemRow->getRevisionId(),
-				'revision_time' => $itemRow->getRevisionTime(),
-			)
-		);
+					'page_title' => $itemRow->getPageTitle(),
+					'revision_id' => $itemRow->getRevisionId(),
+					'revision_time' => $itemRow->getRevisionTime(),
+				)
+			);
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
 	}
 
 	public function storePropertyRow( PropertyRow $propertyRow ) {
-		$this->connection->insert(
-			$this->config->getPropertyTableName(),
-			array(
-				'property_id' => $propertyRow->getNumericPropertyId(),
-				'property_json' => $propertyRow->getPropertyJson(),
+		try {
+			$this->connection->insert(
+				$this->config->getPropertyTableName(),
+				array(
+					'property_id' => $propertyRow->getNumericPropertyId(),
+					'property_json' => $propertyRow->getPropertyJson(),
 
-				'page_title' => $propertyRow->getPageTitle(),
-				'revision_id' => $propertyRow->getRevisionId(),
-				'revision_time' => $propertyRow->getRevisionTime(),
+					'page_title' => $propertyRow->getPageTitle(),
+					'revision_id' => $propertyRow->getRevisionId(),
+					'revision_time' => $propertyRow->getRevisionTime(),
 
-				'property_type' => $propertyRow->getPropertyType(),
-			)
-		);
+					'property_type' => $propertyRow->getPropertyType(),
+				)
+			);
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
 	}
 
 	/**
 	 * @param string|int $numericItemId
 	 * @return ItemRow|null
+	 * @throws EntityStoreException
 	 */
 	public function getItemRowByNumericItemId( $numericItemId ) {
-		$rows = $this->selectItems()
-			->where( 't.item_id = ?' )
-			->setParameter( 0, (int)$numericItemId )
-			->execute();
+		try {
+			$rows = $this->selectItems()
+				->where( 't.item_id = ?' )
+				->setParameter( 0, (int)$numericItemId )
+				->execute();
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
 
 		return $this->newItemRowFromResult( $rows );
 	}
@@ -93,12 +110,18 @@ class EntityStore {
 	 * @param string|int $numericPropertyId
 	 *
 	 * @return PropertyRow|null
+	 * @throws EntityStoreException
 	 */
 	public function getPropertyRowByNumericPropertyId( $numericPropertyId ) {
-		$rows = $this->selectProperties()
-			->where( 't.property_id = ?' )
-			->setParameter( 0, (int)$numericPropertyId )
-			->execute();
+		try {
+			$rows = $this->selectProperties()
+				->where( 't.property_id = ?' )
+				->setParameter( 0, (int)$numericPropertyId )
+				->execute();
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
 
 		return $this->newPropertyRowFromResult( $rows );
 	}

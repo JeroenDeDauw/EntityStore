@@ -19,6 +19,9 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 	const ITEM_ID = '1337';
 	const PROPERTY_ID = '42';
+	
+	const AND_INSTALL = true;
+	const WITHOUT_INSTALLING = false;
 
 	/**
 	 * @var EntityStore
@@ -35,18 +38,19 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $propertyRow;
 
-	private function createAndFillStore() {
-		$this->createStore();
+	public function setUp() {
 		$this->createItemRowField();
 		$this->createPropertyRowField();
 	}
 
-	private function createStore() {
+	private function createStore( $doDbInstall = false ) {
 		$connection = TestFixtureFactory::newInstance()->newConnection();
 		$config = new EntityStoreConfig();
 
-		$installer = new EntityStoreInstaller( $connection->getSchemaManager(), $config );
-		$installer->install();
+		if ( $doDbInstall ) {
+			$installer = new EntityStoreInstaller( $connection->getSchemaManager(), $config );
+			$installer->install();
+		}
 
 		$this->store = new EntityStore( $connection, $config );
 	}
@@ -73,7 +77,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanStoreAndRetrieveItemPage() {
-		$this->createAndFillStore();
+		$this->createStore( self::AND_INSTALL );
 
 		$this->store->storeItemRow( $this->itemRow );
 
@@ -89,12 +93,12 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGivenNotKnownId_getItemRowByNumericItemIdReturnsNull() {
-		$this->createAndFillStore();
+		$this->createStore( self::AND_INSTALL );
 		$this->assertNull( $this->store->getItemRowByNumericItemId( '32202' ) );
 	}
 
 	public function testCanStoreAndRetrievePropertyPage() {
-		$this->createAndFillStore();
+		$this->createStore( self::AND_INSTALL );
 
 		$this->store->storePropertyRow( $this->propertyRow );
 
@@ -111,8 +115,34 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGivenNotKnownId_getPropertyRowByNumericPropertyIdReturnsNull() {
-		$this->createAndFillStore();
+		$this->createStore( self::AND_INSTALL );
 		$this->assertNull( $this->store->getPropertyRowByNumericPropertyId( '32202' ) );
 	}
+
+	public function testWhenStoreNotInitialized_storeItemRowThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->storeItemRow( $this->itemRow );
+	}
+
+	public function testWhenStoreNotInitialized_storePropertyRowThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->storePropertyRow( $this->propertyRow );
+	}
+
+	public function testWhenStoreNotInitialized_getItemRowByNumericItemIdThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->getItemRowByNumericItemId( 1 );
+	}
+
+	public function testWhenStoreNotInitialized_getPropertyRowByNumericPropertyIdThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->getPropertyRowByNumericPropertyId( 1 );
+	}
+
+
 
 }
