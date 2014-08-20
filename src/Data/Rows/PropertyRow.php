@@ -1,6 +1,6 @@
 <?php
 
-namespace Queryr\EntityStore;
+namespace Queryr\EntityStore\Data\Rows;
 
 /**
  * Value object representing a row in the properties table.

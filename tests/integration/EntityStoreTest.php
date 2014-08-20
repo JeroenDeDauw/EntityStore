@@ -3,10 +3,10 @@
 namespace Tests\Queryr\EntityStore;
 
 use Queryr\EntityStore\EntityStoreConfig;
-use Queryr\EntityStore\PropertyRow;
+use Queryr\EntityStore\Data\Rows\PropertyRow;
 use Queryr\EntityStore\EntityStoreInstaller;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
-use Queryr\EntityStore\ItemRow;
+use Queryr\EntityStore\Data\Rows\ItemRow;
 use Queryr\EntityStore\EntityStore;
 
 /**
@@ -83,7 +83,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 		$newItemRow = $this->store->getItemRowByNumericItemId( self::ITEM_ID );
 
-		$this->assertInstanceOf( 'Queryr\EntityStore\ItemRow', $newItemRow );
+		$this->assertInstanceOf( 'Queryr\EntityStore\Data\Rows\ItemRow', $newItemRow );
 
 		$this->assertSame( $this->itemRow->getNumericItemId(), $newItemRow->getNumericItemId() );
 		$this->assertSame( $this->itemRow->getItemJson(), $newItemRow->getItemJson() );
@@ -104,7 +104,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 		$newPropertyRow = $this->store->getPropertyRowByNumericPropertyId( self::PROPERTY_ID );
 
-		$this->assertInstanceOf( 'Queryr\EntityStore\PropertyRow', $newPropertyRow );
+		$this->assertInstanceOf( 'Queryr\EntityStore\Data\Rows\PropertyRow', $newPropertyRow );
 
 		$this->assertSame( $this->propertyRow->getNumericPropertyId(), $newPropertyRow->getNumericPropertyId() );
 		$this->assertSame( $this->propertyRow->getPropertyJson(), $newPropertyRow->getPropertyJson() );
@@ -142,7 +142,5 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
 		$this->store->getPropertyRowByNumericPropertyId( 1 );
 	}
-
-
 
 }

@@ -4,6 +4,8 @@ namespace Queryr\EntityStore;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use Queryr\EntityStore\Data\Rows\ItemRow;
+use Queryr\EntityStore\Data\Rows\PropertyRow;
 
 /**
  * @licence GNU GPL v2+
