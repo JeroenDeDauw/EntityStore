@@ -24,6 +24,7 @@ Running the tests
 * All `EntityStore` methods now throw exceptions of type `EntityStoreException`
 * Added `EntityStoreException`
 * Added `PropertyInfo` and `ItemInfo`
+* Added `getPropertyInfo` and `getItemInfo` to `EntityStore`
 
 ### Version 0.2 (2014-06-29)
 

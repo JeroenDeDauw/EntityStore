@@ -149,4 +149,16 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->store->getPropertyRowByNumericPropertyId( 1 );
 	}
 
+	public function testWhenStoreNotInitialized_getPropertyInfoThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->getPropertyInfo( 10, 0 );
+	}
+
+	public function testWhenStoreNotInitialized_getItemInfoThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->getItemInfo( 10, 0 );
+	}
+
 }

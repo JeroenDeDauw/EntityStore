@@ -103,12 +103,16 @@ class EntityStore {
 
 		return new ItemRow(
 			$row['item_json'],
-			new ItemInfo(
-				$row['item_id'],
-				$row['page_title'],
-				$row['revision_id'],
-				$row['revision_time']
-			)
+			$this->newItemInfoFromResultRow( $row )
+		);
+	}
+
+	private function newItemInfoFromResultRow( array $row ) {
+		return new ItemInfo(
+			$row['item_id'],
+			$row['page_title'],
+			$row['revision_id'],
+			$row['revision_time']
 		);
 	}
 
@@ -154,14 +158,87 @@ class EntityStore {
 
 		return new PropertyRow(
 			$row['property_json'],
-			new PropertyInfo(
-				$row['property_id'],
-				$row['page_title'],
-				$row['revision_id'],
-				$row['revision_time'],
-				$row['property_type']
-			)
+			$this->newPropertyInfoFromResultRow( $row )
 		);
+	}
+
+	private function newPropertyInfoFromResultRow( array $row ) {
+		return new PropertyInfo(
+			$row['property_id'],
+			$row['page_title'],
+			$row['revision_id'],
+			$row['revision_time'],
+			$row['property_type']
+		);
+	}
+
+	private function selectPropertyInfoSets() {
+		return $this->connection->createQueryBuilder()->select(
+			't.property_id',
+			't.page_title',
+			't.revision_id',
+			't.revision_time',
+			't.property_type'
+		)->from( $this->config->getPropertyTableName(), 't' );
+	}
+
+	public function getPropertyInfo( $limit, $offset ) {
+		try {
+			$rows = $this->selectPropertyInfoSets()
+				->orderBy( 't.property_id', 'asc' )
+				->setMaxResults( $limit )
+				->setFirstResult( $offset )
+				->execute();
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
+
+		return $this->newPropertyInfoArrayFromResult( $rows );
+	}
+
+	private function newPropertyInfoArrayFromResult( \Traversable $rows ) {
+		$infoList = [];
+
+		foreach ( $rows as $resultRow ) {
+			$infoList[] = $this->newPropertyInfoFromResultRow( $resultRow );
+		}
+
+		return $infoList;
+	}
+
+	private function selectItemInfoSets() {
+		return $this->connection->createQueryBuilder()->select(
+			't.item_id',
+			't.page_title',
+			't.revision_id',
+			't.revision_time'
+		)->from( $this->config->getItemTableName(), 't' );
+	}
+
+	public function getItemInfo( $limit, $offset ) {
+		try {
+			$rows = $this->selectItemInfoSets()
+				->orderBy( 't.item_id', 'asc' )
+				->setMaxResults( $limit )
+				->setFirstResult( $offset )
+				->execute();
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
+
+		return $this->newItemInfoArrayFromResult( $rows );
+	}
+
+	private function newItemInfoArrayFromResult( \Traversable $rows ) {
+		$infoList = [];
+
+		foreach ( $rows as $resultRow ) {
+			$infoList[] = $this->newItemInfoFromResultRow( $resultRow );
+		}
+
+		return $infoList;
 	}
 
 }
