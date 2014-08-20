@@ -17,6 +17,10 @@ Running the tests
 
 ## Release notes
 
+### Version 0.3.1 (2014-08-20)
+
+* Added extra method level docs for better type hinting
+
 ### Version 0.3 (2014-08-20)
 
 * `ItemRow` and `PropertyRow` are now in `Queryr\EntityStore\Rows`

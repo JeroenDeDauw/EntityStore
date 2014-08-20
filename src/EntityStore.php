@@ -23,6 +23,11 @@ class EntityStore {
 		$this->config = $config;
 	}
 
+	/**
+	 * @param ItemRow $itemRow
+	 *
+	 * @throws EntityStoreException
+	 */
 	public function storeItemRow( ItemRow $itemRow ) {
 		try {
 			$this->connection->insert(
@@ -42,6 +47,11 @@ class EntityStore {
 		}
 	}
 
+	/**
+	 * @param PropertyRow $propertyRow
+	 *
+	 * @throws EntityStoreException
+	 */
 	public function storePropertyRow( PropertyRow $propertyRow ) {
 		try {
 			$this->connection->insert(
@@ -182,6 +192,13 @@ class EntityStore {
 		)->from( $this->config->getPropertyTableName(), 't' );
 	}
 
+	/**
+	 * @param int $limit
+	 * @param int $offset
+	 *
+	 * @return PropertyInfo[]
+	 * @throws EntityStoreException
+	 */
 	public function getPropertyInfo( $limit, $offset ) {
 		try {
 			$rows = $this->selectPropertyInfoSets()
@@ -216,6 +233,13 @@ class EntityStore {
 		)->from( $this->config->getItemTableName(), 't' );
 	}
 
+	/**
+	 * @param int $limit
+	 * @param int $offset
+	 *
+	 * @return ItemInfo[]
+	 * @throws EntityStoreException
+	 */
 	public function getItemInfo( $limit, $offset ) {
 		try {
 			$rows = $this->selectItemInfoSets()
