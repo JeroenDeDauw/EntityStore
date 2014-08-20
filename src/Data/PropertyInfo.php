@@ -1,17 +1,16 @@
 <?php
 
-namespace Queryr\EntityStore\Data\Rows;
+namespace Queryr\EntityStore\Data;
 
 /**
- * Value object representing a row in the properties table.
+ * Value object representing the info stored for a property in the properties table.
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class PropertyRow {
+class PropertyInfo {
 
 	private $propertyId;
-	private $propertyJson;
 	private $pageTitle;
 	private $revisionId;
 	private $revisionTime;
@@ -19,15 +18,13 @@ class PropertyRow {
 
 	/**
 	 * @param string|int $numericPropertyId
-	 * @param string $propertyJson
 	 * @param string $pageTitle
 	 * @param string|int $revisionId
 	 * @param string $revisionTime
 	 * @param string $propertyType
 	 */
-	public function __construct( $numericPropertyId, $propertyJson, $pageTitle, $revisionId, $revisionTime, $propertyType ) {
+	public function __construct( $numericPropertyId, $pageTitle, $revisionId, $revisionTime, $propertyType ) {
 		$this->propertyId = (int)$numericPropertyId;
-		$this->propertyJson = $propertyJson;
 		$this->pageTitle = $pageTitle;
 		$this->revisionId = (int)$revisionId;
 		$this->revisionTime = $revisionTime;
@@ -39,13 +36,6 @@ class PropertyRow {
 	 */
 	public function getNumericPropertyId() {
 		return $this->propertyId;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPropertyJson() {
-		return $this->propertyJson;
 	}
 
 	/**

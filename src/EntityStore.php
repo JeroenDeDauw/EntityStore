@@ -4,8 +4,10 @@ namespace Queryr\EntityStore;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
-use Queryr\EntityStore\Data\Rows\ItemRow;
-use Queryr\EntityStore\Data\Rows\PropertyRow;
+use Queryr\EntityStore\Data\ItemInfo;
+use Queryr\EntityStore\Data\ItemRow;
+use Queryr\EntityStore\Data\PropertyInfo;
+use Queryr\EntityStore\Data\PropertyRow;
 
 /**
  * @licence GNU GPL v2+
@@ -100,11 +102,13 @@ class EntityStore {
 		$row = reset( $rows );
 
 		return new ItemRow(
-			$row['item_id'],
 			$row['item_json'],
-			$row['page_title'],
-			$row['revision_id'],
-			$row['revision_time']
+			new ItemInfo(
+				$row['item_id'],
+				$row['page_title'],
+				$row['revision_id'],
+				$row['revision_time']
+			)
 		);
 	}
 
@@ -149,12 +153,14 @@ class EntityStore {
 		$row = reset( $rows );
 
 		return new PropertyRow(
-			$row['property_id'],
 			$row['property_json'],
-			$row['page_title'],
-			$row['revision_id'],
-			$row['revision_time'],
-			$row['property_type']
+			new PropertyInfo(
+				$row['property_id'],
+				$row['page_title'],
+				$row['revision_id'],
+				$row['revision_time'],
+				$row['property_type']
+			)
 		);
 	}
 

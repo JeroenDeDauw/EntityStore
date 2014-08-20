@@ -19,9 +19,11 @@ Running the tests
 
 ### Version 0.3 (2014-08-20)
 
-* `ItemRow` and `PropertyRow` are now in `Queryr\EntityStore\Data\Rows`
-* Added `EntityStoreException`
+* `ItemRow` and `PropertyRow` are now in `Queryr\EntityStore\Rows`
+* Changed the constructor signatures of `ItemRow` and `PropertyRow`
 * All `EntityStore` methods now throw exceptions of type `EntityStoreException`
+* Added `EntityStoreException`
+* Added `PropertyInfo` and `ItemInfo`
 
 ### Version 0.2 (2014-06-29)
 

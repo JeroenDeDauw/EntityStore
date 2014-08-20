@@ -2,11 +2,13 @@
 
 namespace Tests\Queryr\EntityStore;
 
+use Queryr\EntityStore\Data\ItemInfo;
+use Queryr\EntityStore\Data\PropertyInfo;
 use Queryr\EntityStore\EntityStoreConfig;
-use Queryr\EntityStore\Data\Rows\PropertyRow;
+use Queryr\EntityStore\Data\PropertyRow;
 use Queryr\EntityStore\EntityStoreInstaller;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
-use Queryr\EntityStore\Data\Rows\ItemRow;
+use Queryr\EntityStore\Data\ItemRow;
 use Queryr\EntityStore\EntityStore;
 
 /**
@@ -29,7 +31,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	private $store;
 
 	/**
-	 * @var ItemRow
+	 * @var \Queryr\EntityStore\Data\ItemRow
 	 */
 	private $itemRow;
 
@@ -57,22 +59,26 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 	private function createItemRowField() {
 		$this->itemRow = new ItemRow(
-			self::ITEM_ID,
 			'json be here',
-			'Item:Q1337',
-			'424242',
-			'2014-02-27T11:40:12Z'
+			new ItemInfo(
+				self::ITEM_ID,
+				'Item:Q1337',
+				'424242',
+				'2014-02-27T11:40:12Z'
+			)
 		);
 	}
 
 	private function createPropertyRowField() {
 		$this->propertyRow = new PropertyRow(
-			self::PROPERTY_ID,
 			'json be here',
-			'Property:P42',
-			'424242',
-			'2014-02-27T11:40:12Z',
-			'string'
+			new PropertyInfo(
+				self::PROPERTY_ID,
+				'Property:P42',
+				'424242',
+				'2014-02-27T11:40:12Z',
+				'string'
+			)
 		);
 	}
 
@@ -83,7 +89,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 		$newItemRow = $this->store->getItemRowByNumericItemId( self::ITEM_ID );
 
-		$this->assertInstanceOf( 'Queryr\EntityStore\Data\Rows\ItemRow', $newItemRow );
+		$this->assertInstanceOf( 'Queryr\EntityStore\Data\ItemRow', $newItemRow );
 
 		$this->assertSame( $this->itemRow->getNumericItemId(), $newItemRow->getNumericItemId() );
 		$this->assertSame( $this->itemRow->getItemJson(), $newItemRow->getItemJson() );
@@ -104,7 +110,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 		$newPropertyRow = $this->store->getPropertyRowByNumericPropertyId( self::PROPERTY_ID );
 
-		$this->assertInstanceOf( 'Queryr\EntityStore\Data\Rows\PropertyRow', $newPropertyRow );
+		$this->assertInstanceOf( 'Queryr\EntityStore\Data\PropertyRow', $newPropertyRow );
 
 		$this->assertSame( $this->propertyRow->getNumericPropertyId(), $newPropertyRow->getNumericPropertyId() );
 		$this->assertSame( $this->propertyRow->getPropertyJson(), $newPropertyRow->getPropertyJson() );

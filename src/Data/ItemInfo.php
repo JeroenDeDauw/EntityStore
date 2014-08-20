@@ -1,31 +1,28 @@
 <?php
 
-namespace Queryr\EntityStore\Data\Rows;
+namespace Queryr\EntityStore\Data;
 
 /**
- * Value object representing a row in the items table.
+ * Value object representing the info stored for a property in the items table.
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class ItemRow {
+class ItemInfo {
 
 	private $itemId;
-	private $itemJson;
 	private $pageTitle;
 	private $revisionId;
 	private $revisionTime;
 
 	/**
 	 * @param string|int $numericItemId
-	 * @param string $itemJson
 	 * @param string $pageTitle
 	 * @param string|int $revisionId
 	 * @param string $revisionTime
 	 */
-	public function __construct( $numericItemId, $itemJson, $pageTitle, $revisionId, $revisionTime ) {
+	public function __construct( $numericItemId, $pageTitle, $revisionId, $revisionTime ) {
 		$this->itemId = (int)$numericItemId;
-		$this->itemJson = $itemJson;
 		$this->pageTitle = $pageTitle;
 		$this->revisionId = (int)$revisionId;
 		$this->revisionTime = $revisionTime;
@@ -36,13 +33,6 @@ class ItemRow {
 	 */
 	public function getNumericItemId() {
 		return $this->itemId;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getItemJson() {
-		return $this->itemJson;
 	}
 
 	/**
