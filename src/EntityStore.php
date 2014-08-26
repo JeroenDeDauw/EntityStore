@@ -15,12 +15,18 @@ use Queryr\EntityStore\Data\PropertyRow;
  */
 class EntityStore {
 
-	private $connection;
-	private $config;
+	private $itemStore;
+	private $propertyStore;
 
-	public function __construct( Connection $connection, EntityStoreConfig $config ) {
-		$this->connection = $connection;
-		$this->config = $config;
+	/**
+	 * This constructor is package private. Construction is done via EntityStoreFactory.
+	 *
+	 * @param ItemStore $itemStore
+	 * @param PropertyStore $propertyStore
+	 */
+	public function __construct( ItemStore $itemStore, PropertyStore $propertyStore ) {
+		$this->itemStore = $itemStore;
+		$this->propertyStore = $propertyStore;
 	}
 
 	/**
@@ -29,22 +35,8 @@ class EntityStore {
 	 * @throws EntityStoreException
 	 */
 	public function storeItemRow( ItemRow $itemRow ) {
-		try {
-			$this->connection->insert(
-				$this->config->getItemTableName(),
-				array(
-					'item_id' => $itemRow->getNumericItemId(),
-					'item_json' => $itemRow->getItemJson(),
+		$this->itemStore->storeItemRow( $itemRow );
 
-					'page_title' => $itemRow->getPageTitle(),
-					'revision_id' => $itemRow->getRevisionId(),
-					'revision_time' => $itemRow->getRevisionTime(),
-				)
-			);
-		}
-		catch ( DBALException $ex ) {
-			throw new EntityStoreException( $ex->getMessage(), $ex );
-		}
 	}
 
 	/**
@@ -53,24 +45,7 @@ class EntityStore {
 	 * @throws EntityStoreException
 	 */
 	public function storePropertyRow( PropertyRow $propertyRow ) {
-		try {
-			$this->connection->insert(
-				$this->config->getPropertyTableName(),
-				array(
-					'property_id' => $propertyRow->getNumericPropertyId(),
-					'property_json' => $propertyRow->getPropertyJson(),
-
-					'page_title' => $propertyRow->getPageTitle(),
-					'revision_id' => $propertyRow->getRevisionId(),
-					'revision_time' => $propertyRow->getRevisionTime(),
-
-					'property_type' => $propertyRow->getPropertyType(),
-				)
-			);
-		}
-		catch ( DBALException $ex ) {
-			throw new EntityStoreException( $ex->getMessage(), $ex );
-		}
+		$this->propertyStore->storePropertyRow( $propertyRow );
 	}
 
 	/**
@@ -79,51 +54,7 @@ class EntityStore {
 	 * @throws EntityStoreException
 	 */
 	public function getItemRowByNumericItemId( $numericItemId ) {
-		try {
-			$rows = $this->selectItems()
-				->where( 't.item_id = ?' )
-				->setParameter( 0, (int)$numericItemId )
-				->execute();
-		}
-		catch ( DBALException $ex ) {
-			throw new EntityStoreException( $ex->getMessage(), $ex );
-		}
-
-		return $this->newItemRowFromResult( $rows );
-	}
-
-	private function selectItems() {
-		return $this->connection->createQueryBuilder()->select(
-			't.item_id',
-			't.item_json',
-			't.page_title',
-			't.revision_id',
-			't.revision_time'
-		)->from( $this->config->getItemTableName(), 't' );
-	}
-
-	private function newItemRowFromResult( \Traversable $rows ) {
-		$rows = iterator_to_array( $rows );
-
-		if ( count( $rows ) < 1 ) {
-			return null;
-		}
-
-		$row = reset( $rows );
-
-		return new ItemRow(
-			$row['item_json'],
-			$this->newItemInfoFromResultRow( $row )
-		);
-	}
-
-	private function newItemInfoFromResultRow( array $row ) {
-		return new ItemInfo(
-			$row['item_id'],
-			$row['page_title'],
-			$row['revision_id'],
-			$row['revision_time']
-		);
+		return $this->itemStore->getItemRowByNumericItemId( $numericItemId );
 	}
 
 	/**
@@ -133,63 +64,7 @@ class EntityStore {
 	 * @throws EntityStoreException
 	 */
 	public function getPropertyRowByNumericPropertyId( $numericPropertyId ) {
-		try {
-			$rows = $this->selectProperties()
-				->where( 't.property_id = ?' )
-				->setParameter( 0, (int)$numericPropertyId )
-				->execute();
-		}
-		catch ( DBALException $ex ) {
-			throw new EntityStoreException( $ex->getMessage(), $ex );
-		}
-
-		return $this->newPropertyRowFromResult( $rows );
-	}
-
-	private function selectProperties() {
-		return $this->connection->createQueryBuilder()->select(
-			't.property_id',
-			't.property_json',
-			't.page_title',
-			't.revision_id',
-			't.revision_time',
-			't.property_type'
-		)->from( $this->config->getPropertyTableName(), 't' );
-	}
-
-	private function newPropertyRowFromResult( \Traversable $rows ) {
-		$rows = iterator_to_array( $rows );
-
-		if ( count( $rows ) < 1 ) {
-			return null;
-		}
-
-		$row = reset( $rows );
-
-		return new PropertyRow(
-			$row['property_json'],
-			$this->newPropertyInfoFromResultRow( $row )
-		);
-	}
-
-	private function newPropertyInfoFromResultRow( array $row ) {
-		return new PropertyInfo(
-			$row['property_id'],
-			$row['page_title'],
-			$row['revision_id'],
-			$row['revision_time'],
-			$row['property_type']
-		);
-	}
-
-	private function selectPropertyInfoSets() {
-		return $this->connection->createQueryBuilder()->select(
-			't.property_id',
-			't.page_title',
-			't.revision_id',
-			't.revision_time',
-			't.property_type'
-		)->from( $this->config->getPropertyTableName(), 't' );
+		return $this->propertyStore->getPropertyRowByNumericPropertyId( $numericPropertyId );
 	}
 
 	/**
@@ -200,37 +75,7 @@ class EntityStore {
 	 * @throws EntityStoreException
 	 */
 	public function getPropertyInfo( $limit, $offset ) {
-		try {
-			$rows = $this->selectPropertyInfoSets()
-				->orderBy( 't.property_id', 'asc' )
-				->setMaxResults( $limit )
-				->setFirstResult( $offset )
-				->execute();
-		}
-		catch ( DBALException $ex ) {
-			throw new EntityStoreException( $ex->getMessage(), $ex );
-		}
-
-		return $this->newPropertyInfoArrayFromResult( $rows );
-	}
-
-	private function newPropertyInfoArrayFromResult( \Traversable $rows ) {
-		$infoList = [];
-
-		foreach ( $rows as $resultRow ) {
-			$infoList[] = $this->newPropertyInfoFromResultRow( $resultRow );
-		}
-
-		return $infoList;
-	}
-
-	private function selectItemInfoSets() {
-		return $this->connection->createQueryBuilder()->select(
-			't.item_id',
-			't.page_title',
-			't.revision_id',
-			't.revision_time'
-		)->from( $this->config->getItemTableName(), 't' );
+		return $this->propertyStore->getPropertyInfo( $limit, $offset );
 	}
 
 	/**
@@ -241,28 +86,7 @@ class EntityStore {
 	 * @throws EntityStoreException
 	 */
 	public function getItemInfo( $limit, $offset ) {
-		try {
-			$rows = $this->selectItemInfoSets()
-				->orderBy( 't.item_id', 'asc' )
-				->setMaxResults( $limit )
-				->setFirstResult( $offset )
-				->execute();
-		}
-		catch ( DBALException $ex ) {
-			throw new EntityStoreException( $ex->getMessage(), $ex );
-		}
-
-		return $this->newItemInfoArrayFromResult( $rows );
-	}
-
-	private function newItemInfoArrayFromResult( \Traversable $rows ) {
-		$infoList = [];
-
-		foreach ( $rows as $resultRow ) {
-			$infoList[] = $this->newItemInfoFromResultRow( $resultRow );
-		}
-
-		return $infoList;
+		return $this->itemStore->getItemInfo( $limit, $offset );
 	}
 
 }

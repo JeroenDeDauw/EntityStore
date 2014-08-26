@@ -6,6 +6,7 @@ use Queryr\EntityStore\Data\ItemInfo;
 use Queryr\EntityStore\Data\PropertyInfo;
 use Queryr\EntityStore\EntityStoreConfig;
 use Queryr\EntityStore\Data\PropertyRow;
+use Queryr\EntityStore\EntityStoreFactory;
 use Queryr\EntityStore\EntityStoreInstaller;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 use Queryr\EntityStore\Data\ItemRow;
@@ -47,7 +48,7 @@ class EntityStoreInfoFetchingTest extends \PHPUnit_Framework_TestCase {
 		$installer = new EntityStoreInstaller( $connection->getSchemaManager(), $config );
 		$installer->install();
 
-		$this->store = new EntityStore( $connection, $config );
+		$this->store = ( new EntityStoreFactory( $connection, $config ) )->newEntityStore();
 	}
 
 	private function insertItemRows() {

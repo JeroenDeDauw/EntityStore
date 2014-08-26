@@ -17,6 +17,12 @@ Running the tests
 
 ## Release notes
 
+### Version 0.4 (dev)
+
+* Added `EntityStoreFactory`
+* Construction of `EntityStore` is now package private
+* Added `ItemStore` and `PropertyStore`, both can be constructed via `EntityStoreFactory`
+
 ### Version 0.3.1 (2014-08-20)
 
 * Added extra method level docs for better type hinting
