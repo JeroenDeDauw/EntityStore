@@ -17,7 +17,7 @@ Running the tests
 
 ## Release notes
 
-### Version 0.4 (dev)
+### Version 0.4 (2014-08-27)
 
 * Added `EntityStoreFactory`
 * Construction of `EntityStore` is now package private
