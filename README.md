@@ -22,6 +22,7 @@ Running the tests
 * Added `EntityStoreFactory`
 * Construction of `EntityStore` is now package private
 * Added `ItemStore` and `PropertyStore`, both can be constructed via `EntityStoreFactory`
+* Added `PropertyTypeLookup`, which can be constructed via `EntityStoreFactory::newPropertyTypeLookup`
 
 ### Version 0.3.1 (2014-08-20)
 

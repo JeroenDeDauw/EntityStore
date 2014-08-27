@@ -4,6 +4,10 @@ namespace Queryr\EntityStore;
 
 use Doctrine\DBAL\Connection;
 
+/**
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ */
 class EntityStoreFactory {
 
 	private $connection;
@@ -27,6 +31,10 @@ class EntityStoreFactory {
 
 	public function newPropertyStore() {
 		return new PropertyStore( $this->connection, $this->config->getPropertyTableName() );
+	}
+
+	public function newPropertyTypeLookup() {
+		return new PropertyTypeLookup( $this->connection, $this->config->getPropertyTableName() );
 	}
 
 }
