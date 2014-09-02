@@ -57,7 +57,9 @@ class EntityStoreInfoFetchingTest extends \PHPUnit_Framework_TestCase {
 				$integer,
 				'Item:Q' . $integer,
 				'424242' . $integer,
-				'2014-02-27T11:40:' . $integer . 'Z'
+				'2014-02-27T11:40:' . $integer . 'Z',
+				$integer + 1,
+				'item ' . $integer
 			);
 
 			$this->itemInfos[$integer] = $info;

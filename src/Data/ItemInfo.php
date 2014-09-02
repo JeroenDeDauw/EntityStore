@@ -14,18 +14,24 @@ class ItemInfo {
 	private $pageTitle;
 	private $revisionId;
 	private $revisionTime;
+	private $itemType;
+	private $enLabel;
 
 	/**
 	 * @param string|int $numericItemId
 	 * @param string $pageTitle
 	 * @param string|int $revisionId
 	 * @param string $revisionTime
+	 * @param string|int|null $itemType
+	 * @param string|null $enLabel
 	 */
-	public function __construct( $numericItemId, $pageTitle, $revisionId, $revisionTime ) {
+	public function __construct( $numericItemId, $pageTitle, $revisionId, $revisionTime, $itemType, $enLabel ) {
 		$this->itemId = (int)$numericItemId;
 		$this->pageTitle = $pageTitle;
 		$this->revisionId = (int)$revisionId;
 		$this->revisionTime = $revisionTime;
+		$this->itemType = $itemType === null ? null : (int)$itemType;
+		$this->enLabel = $enLabel;
 	}
 
 	/**
@@ -54,6 +60,20 @@ class ItemInfo {
 	 */
 	public function getRevisionTime() {
 		return $this->revisionTime;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getEnglishLabel() {
+		return $this->enLabel;
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function getItemType() {
+		return $this->itemType;
 	}
 
 }

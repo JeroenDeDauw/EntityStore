@@ -56,7 +56,9 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 				self::ITEM_ID,
 				'Item:Q1337',
 				'424242',
-				'2014-02-27T11:40:12Z'
+				'2014-02-27T11:40:12Z',
+				1,
+				'kittens'
 			)
 		);
 	}

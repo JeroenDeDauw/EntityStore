@@ -17,6 +17,11 @@ Running the tests
 
 ## Release notes
 
+### Version 0.5 (dev)
+
+* Added `$itemType` and `$enLabel` parameters to the `ItemInfo` constructor
+* Added `ItemRow::getItemInfo`
+
 ### Version 0.4 (2014-08-27)
 
 * Added `EntityStoreFactory`

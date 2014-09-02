@@ -38,11 +38,14 @@ class ItemStore {
 				$this->tableName,
 				array(
 					'item_id' => $itemRow->getNumericItemId(),
-					'item_json' => $itemRow->getItemJson(),
+					'item_type' => $itemRow->getItemInfo()->getItemType(),
+					'item_label_en' => $itemRow->getItemInfo()->getEnglishLabel(),
 
 					'page_title' => $itemRow->getPageTitle(),
 					'revision_id' => $itemRow->getRevisionId(),
 					'revision_time' => $itemRow->getRevisionTime(),
+
+					'item_json' => $itemRow->getItemJson(),
 				)
 			);
 		}
@@ -76,7 +79,9 @@ class ItemStore {
 			't.item_json',
 			't.page_title',
 			't.revision_id',
-			't.revision_time'
+			't.revision_time',
+			't.item_type',
+			't.item_label_en'
 		)->from( $this->tableName, 't' );
 	}
 
@@ -100,7 +105,9 @@ class ItemStore {
 			$row['item_id'],
 			$row['page_title'],
 			$row['revision_id'],
-			$row['revision_time']
+			$row['revision_time'],
+			$row['item_type'],
+			$row['item_label_en']
 		);
 	}
 
@@ -109,7 +116,9 @@ class ItemStore {
 			't.item_id',
 			't.page_title',
 			't.revision_id',
-			't.revision_time'
+			't.revision_time',
+			't.item_type',
+			't.item_label_en'
 		)->from( $this->tableName, 't' );
 	}
 

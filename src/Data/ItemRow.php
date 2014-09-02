@@ -57,4 +57,11 @@ class ItemRow {
 		return $this->itemInfo->getRevisionTime();
 	}
 
+	/**
+	 * @return ItemInfo
+	 */
+	public function getItemInfo() {
+		return $this->itemInfo;
+	}
+
 }
