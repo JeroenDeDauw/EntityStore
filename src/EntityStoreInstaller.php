@@ -33,15 +33,18 @@ class EntityStoreInstaller {
 		$table = new Table( $this->config->getItemTableName() );
 
 		$table->addColumn( 'item_id', Type::BIGINT );
-		$table->addColumn( 'item_json', Type::BLOB );
-		$table->addColumn( 'page_title', Type::STRING, array( 'length' => 255 ) );
+		$table->addColumn( 'item_type', Type::BIGINT, [ 'notnull' => false ] );
+		$table->addColumn( 'page_title', Type::STRING, [ 'length' => 255 ] );
 		$table->addColumn( 'revision_id', Type::BIGINT );
-		$table->addColumn( 'revision_time', Type::STRING, array( 'length' => 25 ) );
+		$table->addColumn( 'revision_time', Type::STRING, [ 'length' => 25 ] );
+		$table->addColumn( 'item_json', Type::BLOB );
+		$table->addColumn( 'item_label_en', Type::STRING, [ 'length' => 255, 'notnull' => false ] );
 
-		$table->addIndex( array( 'item_id' ) );
-		$table->addIndex( array( 'page_title' ) );
-		$table->addIndex( array( 'revision_id' ) );
-		$table->addIndex( array( 'revision_time' ) );
+		$table->addIndex( [ 'item_id' ] );
+		$table->addIndex( [ 'item_type' ] );
+		$table->addIndex( [ 'page_title' ] );
+		$table->addIndex( [ 'revision_id' ] );
+		$table->addIndex( [ 'revision_time' ] );
 
 		return $table;
 	}
@@ -51,16 +54,16 @@ class EntityStoreInstaller {
 
 		$table->addColumn( 'property_id', Type::BIGINT );
 		$table->addColumn( 'property_json', Type::BLOB );
-		$table->addColumn( 'page_title', Type::STRING, array( 'length' => 255 ) );
+		$table->addColumn( 'page_title', Type::STRING, [ 'length' => 255 ] );
 		$table->addColumn( 'revision_id', Type::BIGINT );
-		$table->addColumn( 'revision_time', Type::STRING, array( 'length' => 25 ) );
-		$table->addColumn( 'property_type', Type::STRING, array( 'length' => 30 ) );
+		$table->addColumn( 'revision_time', Type::STRING, [ 'length' => 25 ] );
+		$table->addColumn( 'property_type', Type::STRING, [ 'length' => 30 ] );
 
-		$table->addIndex( array( 'property_id' ) );
-		$table->addIndex( array( 'page_title' ) );
-		$table->addIndex( array( 'revision_id' ) );
-		$table->addIndex( array( 'revision_time' ) );
-		$table->addIndex( array( 'property_type' ) );
+		$table->addIndex( [ 'property_id' ] );
+		$table->addIndex( [ 'page_title' ] );
+		$table->addIndex( [ 'revision_id' ] );
+		$table->addIndex( [ 'revision_time' ] );
+		$table->addIndex( [ 'property_type' ] );
 
 		return $table;
 	}
