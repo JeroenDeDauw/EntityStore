@@ -45,7 +45,7 @@ class ItemRowFactory {
 	}
 
 	private function getItemJson( Item $item ) {
-		return $this->itemSerializer->serialize( $item );
+		return json_encode( $this->itemSerializer->serialize( $item ) );
 	}
 
 	private function getItemType( Item $item ) {

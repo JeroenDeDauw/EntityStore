@@ -2,6 +2,8 @@
 
 namespace Queryr\EntityStore\Data;
 
+use InvalidArgumentException;
+
 /**
  * Value object representing a row in the items table.
  * Package public.
@@ -17,8 +19,13 @@ class ItemRow {
 	/**
 	 * @param string $itemJson
 	 * @return $this
+	 * @throws InvalidArgumentException
 	 */
 	public function setItemJson( $itemJson ) {
+		if ( !is_string( $itemJson ) ) {
+			throw new InvalidArgumentException( '$itemJson should be a string' );
+		}
+
 		$this->itemJson = $itemJson;
 		return $this;
 	}

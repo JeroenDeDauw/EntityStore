@@ -26,7 +26,7 @@ class ItemRowFactoryTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertSame( 64, $itemRow->getNumericItemId() );
 		$this->assertSame( 'Berlin', $itemRow->getEnglishLabel() );
-		$this->assertSame( 'the serialization', $itemRow->getItemJson() );
+		$this->assertSame( '["the","serialization"]', $itemRow->getItemJson() );
 		$this->assertSame( 42, $itemRow->getItemType() );
 	}
 
@@ -75,7 +75,7 @@ class ItemRowFactoryTest extends \PHPUnit_Framework_TestCase {
 
 		$serializer->expects( $this->any() )
 			->method( 'serialize' )
-			->will( $this->returnValue( 'the serialization' ) );
+			->will( $this->returnValue( [ 'the', 'serialization' ] ) );
 
 		return $serializer;
 	}

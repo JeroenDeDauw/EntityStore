@@ -36,7 +36,6 @@ class EntityStore {
 	 */
 	public function storeItemRow( ItemRow $itemRow ) {
 		$this->itemStore->storeItemRow( $itemRow );
-
 	}
 
 	/**
