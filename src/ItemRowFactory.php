@@ -2,6 +2,7 @@
 
 namespace Queryr\EntityStore;
 
+use InvalidArgumentException;
 use Queryr\EntityStore\Data\EntityPageInfo;
 use Queryr\EntityStore\Data\ItemRow;
 use Serializers\Serializer;
@@ -26,8 +27,13 @@ class ItemRowFactory {
 	 * @param EntityPageInfo $pageInfo
 	 *
 	 * @return ItemRow
+	 * @throws InvalidArgumentException
 	 */
 	public function newFromItemAndPageInfo( Item $item, EntityPageInfo $pageInfo ) {
+		if ( $item->getId() === null ) {
+			throw new InvalidArgumentException( 'The items id cannot be null' );
+		}
+
 		return ( new ItemRow() )
 			->setPageTitle( $pageInfo->getPageTitle() )
 			->setRevisionId( $pageInfo->getRevisionId() )

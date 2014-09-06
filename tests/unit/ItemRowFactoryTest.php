@@ -42,10 +42,24 @@ class ItemRowFactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNull( $itemRow->getEnglishLabel() );
 	}
 
+	public function testNewRowForItemWithoutType() {
+		$factory = new ItemRowFactory(
+			$this->newStubItemSerializer(),
+			$this->newStubTypeExtractor( null )
+		);
+
+		$itemRow = $factory->newFromItemAndPageInfo(
+			( new Berlin() )->newItem(),
+			$this->newPageInfo()
+		);
+
+		$this->assertNull( $itemRow->getItemType() );
+	}
+
 	private function newFactory() {
 		return new ItemRowFactory(
 			$this->newStubItemSerializer(),
-			$this->newStubTypeExtractor()
+			$this->newStubTypeExtractor( 42 )
 		);
 	}
 
@@ -66,12 +80,12 @@ class ItemRowFactoryTest extends \PHPUnit_Framework_TestCase {
 		return $serializer;
 	}
 
-	private function newStubTypeExtractor() {
+	private function newStubTypeExtractor( $returnValue ) {
 		$extractor = $this->getMock( 'Queryr\EntityStore\ItemTypeExtractor' );
 
 		$extractor->expects( $this->any() )
 			->method( 'getTypeOfItem' )
-			->will( $this->returnValue( 42 ) );
+			->will( $this->returnValue( $returnValue ) );
 
 		return $extractor;
 	}
