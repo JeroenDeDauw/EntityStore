@@ -20,9 +20,10 @@ Running the tests
 ### Version 0.5 (2014-09-06)
 
 * Removed the constructors of `ItemRow` and `ItemInfo`
+* Added `item type` and `english label` fields to the items table
 * Added `ItemRow::getItemInfo`
 * Added `EntityPageInfo`
-* Added `ItemRowFactory`. Construction of `ItemRow` should now be done via this class.
+* Added `ItemRowFactory`. Construction of `ItemRow` should now be done via this class
 
 ### Version 0.4 (2014-08-27)
 
