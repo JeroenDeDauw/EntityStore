@@ -74,6 +74,8 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( $this->itemRow->getPageTitle(), $newItemRow->getPageTitle() );
 		$this->assertSame( $this->itemRow->getRevisionId(), $newItemRow->getRevisionId() );
 		$this->assertSame( $this->itemRow->getRevisionTime(), $newItemRow->getRevisionTime() );
+		$this->assertSame( $this->itemRow->getItemType(), $newItemRow->getItemType() );
+		$this->assertSame( $this->itemRow->getEnglishLabel(), $newItemRow->getEnglishLabel() );
 	}
 
 	public function testGivenNotKnownId_getItemRowByNumericItemIdReturnsNull() {
