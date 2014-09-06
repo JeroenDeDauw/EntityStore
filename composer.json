@@ -7,12 +7,12 @@
 
 		"doctrine/dbal": "~2.4",
 		"wikibase/data-model": "~1.0",
-		"serialization/serialization": "~3.2",
-		"jeroen/wikibase-data-fixtures": "~0.2"
+		"serialization/serialization": "~3.2"
 	},
 	"require-dev": {
 		"ext-sqlite3": "*",
-		"whatthejeff/nyancat-phpunit-resultprinter": "~1.2"
+		"whatthejeff/nyancat-phpunit-resultprinter": "~1.2",
+		"jeroen/wikibase-data-fixtures": "~0.2"
 	},
 	"autoload": {
 		"psr-4": {
