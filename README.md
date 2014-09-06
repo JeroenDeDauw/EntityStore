@@ -17,10 +17,12 @@ Running the tests
 
 ## Release notes
 
-### Version 0.5 (dev)
+### Version 0.5 (2014-09-06)
 
-* Added `$itemType` and `$enLabel` parameters to the `ItemInfo` constructor
+* Removed the constructors of `ItemRow` and `ItemInfo`
 * Added `ItemRow::getItemInfo`
+* Added `EntityPageInfo`
+* Added `ItemRowFactory`. Construction of `ItemRow` should now be done via this class.
 
 ### Version 0.4 (2014-08-27)
 
