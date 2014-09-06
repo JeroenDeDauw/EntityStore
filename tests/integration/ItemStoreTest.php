@@ -161,7 +161,7 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 				->setNumericItemId( 4000 )
 		);
 
-		$this->assertSame( [ 1, 5 ], $this->store->getItemTypes( 10, 0 ) );
+		$this->assertSame( [ 1, 5 ], $this->store->getItemTypes() );
 
 		$this->assertSame( [ 1 ], $this->store->getItemTypes( 1, 0 ) );
 		$this->assertSame( [ 5 ], $this->store->getItemTypes( 10, 1 ) );

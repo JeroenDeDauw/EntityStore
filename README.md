@@ -17,6 +17,10 @@ Running the tests
 
 ## Release notes
 
+### Version 0.5.1 (2014-09-06)
+
+* Added `ItemStore::getItemTypes`
+
 ### Version 0.5 (2014-09-06)
 
 * Removed the constructors of `ItemRow` and `ItemInfo`

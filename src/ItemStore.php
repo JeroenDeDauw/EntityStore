@@ -157,13 +157,22 @@ class ItemStore {
 		return $infoList;
 	}
 
-	public function getItemTypes() {
+	/**
+	 * @param int $limit
+	 * @param int $offset
+	 *
+	 * @return int[]
+	 * @throws EntityStoreException
+	 */
+	public function getItemTypes( $limit = 100, $offset = 0 ) {
 		try {
 			$rows = $this->connection->createQueryBuilder()
 				->select( 'DISTINCT t.item_type' )
 				->from( $this->tableName, 't' )
 				->where( 't.item_type IS NOT NULL' )
 				->orderBy( 't.item_type', 'ASC' )
+				->setMaxResults( $limit )
+				->setFirstResult( $offset )
 				->execute();
 		}
 		catch ( DBALException $ex ) {
