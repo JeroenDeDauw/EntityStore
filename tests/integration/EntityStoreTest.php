@@ -59,17 +59,14 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	private function createItemRowField() {
-		$this->itemRow = new ItemRow(
-			'json be here',
-			new ItemInfo(
-				self::ITEM_ID,
-				'Item:Q1337',
-				'424242',
-				'2014-02-27T11:40:12Z',
-				1,
-				'kittens'
-			)
-		);
+		$this->itemRow = ( new ItemRow() )
+			->setPageTitle( 'Item:Q1337' )
+			->setRevisionId( '424242' )
+			->setItemType( 1 )
+			->setRevisionTime( '2014-02-27T11:40:12Z' )
+			->setEnglishLabel( 'kittens' )
+			->setItemJson( 'json be here' )
+			->setNumericItemId( self::ITEM_ID );
 	}
 
 	private function createPropertyRowField() {

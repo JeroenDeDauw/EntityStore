@@ -4,22 +4,23 @@ namespace Queryr\EntityStore\Data;
 
 /**
  * Value object representing a row in the items table.
+ * Package public.
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ItemRow {
+	use ItemRowInfo;
 
 	private $itemJson;
-	private $itemInfo;
 
 	/**
 	 * @param string $itemJson
-	 * @param ItemInfo $info
+	 * @return $this
 	 */
-	public function __construct( $itemJson, ItemInfo $info ) {
+	public function setItemJson( $itemJson ) {
 		$this->itemJson = $itemJson;
-		$this->itemInfo = $info;
+		return $this;
 	}
 
 	/**
@@ -30,38 +31,16 @@ class ItemRow {
 	}
 
 	/**
-	 * @return int
-	 */
-	public function getNumericItemId() {
-		return $this->itemInfo->getNumericItemId();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPageTitle() {
-		return $this->itemInfo->getPageTitle();
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getRevisionId() {
-		return $this->itemInfo->getRevisionId();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getRevisionTime() {
-		return $this->itemInfo->getRevisionTime();
-	}
-
-	/**
 	 * @return ItemInfo
 	 */
 	public function getItemInfo() {
-		return $this->itemInfo;
+		return ( new ItemInfo() )
+			->setPageTitle( $this->getPageTitle() )
+			->setNumericItemId( $this->getNumericItemId() )
+			->setRevisionId( $this->getRevisionId() )
+			->setItemType( $this->getItemType() )
+			->setRevisionTime( $this->getRevisionTime() )
+			->setEnglishLabel( $this->getEnglishLabel() );
 	}
 
 }

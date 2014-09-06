@@ -38,8 +38,8 @@ class ItemStore {
 				$this->tableName,
 				array(
 					'item_id' => $itemRow->getNumericItemId(),
-					'item_type' => $itemRow->getItemInfo()->getItemType(),
-					'item_label_en' => $itemRow->getItemInfo()->getEnglishLabel(),
+					'item_type' => $itemRow->getItemType(),
+					'item_label_en' => $itemRow->getEnglishLabel(),
 
 					'page_title' => $itemRow->getPageTitle(),
 					'revision_id' => $itemRow->getRevisionId(),
@@ -94,21 +94,24 @@ class ItemStore {
 
 		$row = reset( $rows );
 
-		return new ItemRow(
-			$row['item_json'],
-			$this->newItemInfoFromResultRow( $row )
-		);
+		return ( new ItemRow() )
+			->setItemJson( $row['item_json'] )
+			->setNumericItemId( $row['item_id'] )
+			->setPageTitle( $row['page_title'] )
+			->setRevisionId( $row['revision_id'] )
+			->setRevisionTime( $row['revision_time'] )
+			->setItemType( $row['item_type'] )
+			->setEnglishLabel( $row['item_label_en'] );
 	}
 
 	private function newItemInfoFromResultRow( array $row ) {
-		return new ItemInfo(
-			$row['item_id'],
-			$row['page_title'],
-			$row['revision_id'],
-			$row['revision_time'],
-			$row['item_type'],
-			$row['item_label_en']
-		);
+		return ( new ItemInfo() )
+			->setNumericItemId( $row['item_id'] )
+			->setPageTitle( $row['page_title'] )
+			->setRevisionId( $row['revision_id'] )
+			->setRevisionTime( $row['revision_time'] )
+			->setItemType( $row['item_type'] )
+			->setEnglishLabel( $row['item_label_en'] );
 	}
 
 	private function selectItemInfoSets() {

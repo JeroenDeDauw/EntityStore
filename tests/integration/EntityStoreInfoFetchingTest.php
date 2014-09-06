@@ -53,23 +53,18 @@ class EntityStoreInfoFetchingTest extends \PHPUnit_Framework_TestCase {
 
 	private function insertItemRows() {
 		foreach ( [ 1, 10, 2, 9, 8, 7, 3, 4, 6, 5 ] as $integer ) {
-			$info = new ItemInfo(
-				$integer,
-				'Item:Q' . $integer,
-				'424242' . $integer,
-				'2014-02-27T11:40:' . $integer . 'Z',
-				$integer + 1,
-				'item ' . $integer
-			);
+			$row = ( new ItemRow() )
+				->setItemJson( 'json be here ' . $integer )
+				->setEnglishLabel( 'item ' . $integer )
+				->setItemType( $integer + 1 )
+				->setRevisionTime( '2014-02-27T11:40:' . $integer . 'Z' )
+				->setRevisionId( '424242' . $integer )
+				->setNumericItemId( $integer )
+				->setPageTitle( 'Item:Q' . $integer );
 
-			$this->itemInfos[$integer] = $info;
+			$this->itemInfos[$integer] = $row->getItemInfo();
 
-			$this->store->storeItemRow(
-				new ItemRow(
-					'json be here ' . $integer,
-					$info
-				)
-			);
+			$this->store->storeItemRow( $row );
 		}
 
 		sort( $this->itemInfos );
