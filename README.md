@@ -17,6 +17,10 @@ Running the tests
 
 ## Release notes
 
+### Version 0.5.3 (2014-09-06)
+
+* Added `InstanceOfTypeExtractor` implementation of `ItemTypeExtractor`
+
 ### Version 0.5.2 (2014-09-06)
 
 * Fixed item serialization bug in `ItemRowFactory`
