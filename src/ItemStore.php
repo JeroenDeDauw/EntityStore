@@ -157,4 +157,30 @@ class ItemStore {
 		return $infoList;
 	}
 
+	public function getItemTypes() {
+		try {
+			$rows = $this->connection->createQueryBuilder()
+				->select( 'DISTINCT t.item_type' )
+				->from( $this->tableName, 't' )
+				->where( 't.item_type IS NOT NULL' )
+				->orderBy( 't.item_type', 'ASC' )
+				->execute();
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
+
+		return $this->getTypeArrayFromRows( $rows );
+	}
+
+	private function getTypeArrayFromRows( \Traversable $rows ) {
+		$types = [];
+
+		foreach ( $rows as $row ) {
+			$types[] = (int)$row['item_type'];
+		}
+
+		return $types;
+	}
+
 }

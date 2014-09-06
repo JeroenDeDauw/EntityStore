@@ -7,8 +7,10 @@ use Queryr\EntityStore\Data\ItemRow;
 use Queryr\EntityStore\EntityStoreConfig;
 use Queryr\EntityStore\EntityStoreFactory;
 use Queryr\EntityStore\EntityStoreInstaller;
+use Queryr\EntityStore\ItemRowFactory;
 use Queryr\EntityStore\ItemStore;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
+use Wikibase\DataModel\Entity\Item;
 
 /**
  * @covers Queryr\EntityStore\ItemStore
@@ -99,6 +101,67 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->createStore( self::WITHOUT_INSTALLING );
 		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
 		$this->store->getItemInfo( 10, 0 );
+	}
+
+	public function testWhenStoreNotInitialized_getItemTypesThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->getItemTypes();
+	}
+
+	public function testWhenNoItemsInStore_getItemTypesReturnsEmptyArray() {
+		$this->createStore( self::AND_INSTALL );
+		$this->assertSame( [], $this->store->getItemTypes() );
+	}
+
+	public function testGetItemTypesReturnsDistinctNonNullTypes() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q1000' )
+				->setRevisionId( '123456' )
+				->setItemType( 5 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'kittens' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 1000 )
+		);
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q2000' )
+				->setRevisionId( '234567' )
+				->setItemType( 5 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'cats' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 2000 )
+		);
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q3000' )
+				->setRevisionId( '345678' )
+				->setItemType( 1 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'more cats' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 3000 )
+		);
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q4000' )
+				->setRevisionId( '456789' )
+				->setItemType( null )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'more kittens' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 4000 )
+		);
+
+		$this->assertSame( [ 1, 5 ], $this->store->getItemTypes() );
 	}
 
 }
