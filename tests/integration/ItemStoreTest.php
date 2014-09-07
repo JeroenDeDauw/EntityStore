@@ -114,9 +114,7 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( [], $this->store->getItemTypes() );
 	}
 
-	public function testGetItemTypesReturnsDistinctNonNullTypes() {
-		$this->createStore( self::AND_INSTALL );
-
+	private function insertFiveItems() {
 		$this->store->storeItemRow(
 			( new ItemRow() )
 				->setPageTitle( 'Item:Q1000' )
@@ -161,10 +159,26 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 				->setNumericItemId( 4000 )
 		);
 
-		$this->assertSame( [ 1, 5 ], $this->store->getItemTypes() );
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q5000' )
+				->setRevisionId( '567890' )
+				->setItemType( 3 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'all kittens' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 5000 )
+		);
+	}
+
+	public function testGetItemTypesReturnsDistinctNonNullTypes() {
+		$this->createStore( self::AND_INSTALL );
+		$this->insertFiveItems();
+
+		$this->assertSame( [ 1, 3, 5 ], $this->store->getItemTypes() );
 
 		$this->assertSame( [ 1 ], $this->store->getItemTypes( 1, 0 ) );
-		$this->assertSame( [ 5 ], $this->store->getItemTypes( 10, 1 ) );
+		$this->assertSame( [ 3, 5 ], $this->store->getItemTypes( 10, 1 ) );
 	}
 
 }
