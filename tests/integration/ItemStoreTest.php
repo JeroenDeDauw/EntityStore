@@ -181,4 +181,29 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( [ 3, 5 ], $this->store->getItemTypes( 10, 1 ) );
 	}
 
+	public function testGivenNullTypeFilter_getItemInfoReturnsAllItems() {
+		$this->createStore( self::AND_INSTALL );
+		$this->insertFiveItems();
+
+		$this->assertCount( 5, $this->store->getItemInfo( 10, 0, null ) );
+	}
+
+	public function testGivenMatchingTypeFilter_getItemInfoReturnsOnlyMatchingItems() {
+		$this->createStore( self::AND_INSTALL );
+		$this->insertFiveItems();
+
+		$itemInfo = $this->store->getItemInfo( 10, 0, 5 );
+
+		$this->assertCount( 2, $itemInfo );
+		$this->assertSame( 1000, $itemInfo[0]->getNumericItemId() );
+		$this->assertSame( 2000, $itemInfo[1]->getNumericItemId() );
+	}
+
+	public function testGivenNonMatchingTypeFilter_getItemInfoReturnsEmptyArray() {
+		$this->createStore( self::AND_INSTALL );
+		$this->insertFiveItems();
+
+		$this->assertSame( [], $this->store->getItemInfo( 10, 0, 1337 ) );
+	}
+
 }

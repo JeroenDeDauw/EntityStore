@@ -17,6 +17,10 @@ Running the tests
 
 ## Release notes
 
+### Version 0.5.4 (2014-09-08)
+
+* Added optional `$itemType` parameter to `ItemStore::getItemInfo`
+
 ### Version 0.5.3 (2014-09-06)
 
 * Added `InstanceOfTypeExtractor` implementation of `ItemTypeExtractor`

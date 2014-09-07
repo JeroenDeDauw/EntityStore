@@ -128,17 +128,23 @@ class ItemStore {
 	/**
 	 * @param int $limit
 	 * @param int $offset
+	 * @param int|null $itemType
 	 *
 	 * @return ItemInfo[]
 	 * @throws EntityStoreException
 	 */
-	public function getItemInfo( $limit, $offset ) {
+	public function getItemInfo( $limit, $offset, $itemType = null ) {
+		$query = $this->selectItemInfoSets()
+			->orderBy( 't.item_id', 'asc' )
+			->setMaxResults( $limit )
+			->setFirstResult( $offset );
+
+		if ( is_int( $itemType ) ) {
+			$query->where( 't.item_type = ?' )->setParameter( 0, $itemType );
+		}
+
 		try {
-			$rows = $this->selectItemInfoSets()
-				->orderBy( 't.item_id', 'asc' )
-				->setMaxResults( $limit )
-				->setFirstResult( $offset )
-				->execute();
+			$rows = $query->execute();
 		}
 		catch ( DBALException $ex ) {
 			throw new EntityStoreException( $ex->getMessage(), $ex );
