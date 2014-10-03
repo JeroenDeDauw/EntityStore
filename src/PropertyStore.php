@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Queryr\EntityStore\Data\PropertyInfo;
 use Queryr\EntityStore\Data\PropertyRow;
+use Wikibase\DataModel\Entity\PropertyId;
 
 /**
  * @licence GNU GPL v2+
@@ -33,6 +34,8 @@ class PropertyStore {
 	 * @throws EntityStoreException
 	 */
 	public function storePropertyRow( PropertyRow $propertyRow ) {
+		$this->deletePropertyById( PropertyId::newFromNumber( $propertyRow->getNumericPropertyId() ) );
+
 		try {
 			$this->connection->insert(
 				$this->tableName,
@@ -46,6 +49,25 @@ class PropertyStore {
 
 					'property_type' => $propertyRow->getPropertyType(),
 				)
+			);
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
+	}
+
+	/**
+	 * @param PropertyId $propertyId
+	 *
+	 * @throws EntityStoreException
+	 */
+	public function deletePropertyById( PropertyId $propertyId ) {
+		try {
+			$this->connection->delete(
+				$this->tableName,
+				[
+					'property_id' => $propertyId->getNumericId()
+				]
 			);
 		}
 		catch ( DBALException $ex ) {

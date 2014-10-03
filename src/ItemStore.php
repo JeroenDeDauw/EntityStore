@@ -29,25 +29,6 @@ class ItemStore {
 	}
 
 	/**
-	 * @param ItemId $itemId
-	 *
-	 * @throws EntityStoreException
-	 */
-	public function deleteItemById( ItemId $itemId ) {
-		try {
-			$this->connection->delete(
-				$this->tableName,
-				[
-					'item_id' => $itemId->getNumericId()
-				]
-			);
-		}
-		catch ( DBALException $ex ) {
-			throw new EntityStoreException( $ex->getMessage(), $ex );
-		}
-	}
-
-	/**
 	 * @param ItemRow $itemRow
 	 *
 	 * @throws EntityStoreException
@@ -68,6 +49,25 @@ class ItemStore {
 					'revision_time' => $itemRow->getRevisionTime(),
 
 					'item_json' => $itemRow->getItemJson(),
+				]
+			);
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
+	}
+
+	/**
+	 * @param ItemId $itemId
+	 *
+	 * @throws EntityStoreException
+	 */
+	public function deleteItemById( ItemId $itemId ) {
+		try {
+			$this->connection->delete(
+				$this->tableName,
+				[
+					'item_id' => $itemId->getNumericId()
 				]
 			);
 		}

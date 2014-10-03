@@ -12,6 +12,7 @@ use Queryr\EntityStore\PropertyStore;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 use Queryr\EntityStore\Data\ItemRow;
 use Queryr\EntityStore\EntityStore;
+use Wikibase\DataModel\Entity\PropertyId;
 
 /**
  * @covers Queryr\EntityStore\PropertyStore
@@ -49,7 +50,7 @@ class PropertyStoreTest extends \PHPUnit_Framework_TestCase {
 			$installer->install();
 		}
 
-		$this->store = ( new EntityStoreFactory( $connection, $config ) )->newEntityStore();
+		$this->store = ( new EntityStoreFactory( $connection, $config ) )->newPropertyStore();
 	}
 
 	private function createPropertyRowField() {
@@ -103,6 +104,80 @@ class PropertyStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->createStore( self::WITHOUT_INSTALLING );
 		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
 		$this->store->getPropertyInfo( 10, 0 );
+	}
+
+	public function testInsertingExistingPropertyOverridesTheOriginalOne() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storePropertyRow( new PropertyRow(
+			'json be here',
+			new PropertyInfo(
+				42,
+				'Property:P42',
+				'424242',
+				'2014-02-27T11:40:12Z',
+				'string'
+			)
+		) );
+
+		$this->store->storePropertyRow( new PropertyRow(
+			'json be here',
+			new PropertyInfo(
+				42,
+				'Property:P42',
+				'2445325',
+				'2014-02-27T11:40:12Z',
+				'kittens'
+			)
+		) );
+
+		$infoSets = $this->store->getPropertyInfo(  10, 0 );
+		$this->assertCount( 1, $infoSets );
+		$this->assertSame( 'kittens', $infoSets[0]->getPropertyType() );
+	}
+
+	public function testWhenStoreNotInitialized_deleteItemByIdThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->deletePropertyById( new PropertyId( 'P1' ) );
+	}
+
+	public function testGivenNonExistingId_deleteItemByIdDoesNotDeleteItems() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storePropertyRow( new PropertyRow(
+			'json be here',
+			new PropertyInfo(
+				42,
+				'Property:P42',
+				'424242',
+				'2014-02-27T11:40:12Z',
+				'string'
+			)
+		) );
+
+		$this->store->deletePropertyById( new PropertyId( 'P43' ) );
+
+		$this->assertCount( 1, $this->store->getPropertyInfo(  10, 0 ) );
+	}
+
+	public function testGivenExistingId_deleteItemByIdDeletesItem() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storePropertyRow( new PropertyRow(
+			'json be here',
+			new PropertyInfo(
+				42,
+				'Property:P42',
+				'424242',
+				'2014-02-27T11:40:12Z',
+				'string'
+			)
+		) );
+
+		$this->store->deletePropertyById( new PropertyId( 'P42' ) );
+
+		$this->assertCount( 0, $this->store->getPropertyInfo(  10, 0 ) );
 	}
 
 }
