@@ -11,6 +11,7 @@ use Queryr\EntityStore\ItemRowFactory;
 use Queryr\EntityStore\ItemStore;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 use Wikibase\DataModel\Entity\Item;
+use Wikibase\DataModel\Entity\ItemId;
 
 /**
  * @covers Queryr\EntityStore\ItemStore
@@ -234,6 +235,50 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$infoSets = $this->store->getItemInfo(  10, 0 );
 		$this->assertCount( 1, $infoSets );
 		$this->assertSame( 4, $infoSets[0]->getItemType() );
+	}
+
+	public function testWhenStoreNotInitialized_deleteItemByIdThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->store->deleteItemById( new ItemId( 'Q1' ) );
+	}
+
+	public function testGivenNonExistingId_deleteItemByIdDoesNotDeleteItems() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q1000' )
+				->setRevisionId( '123456' )
+				->setItemType( 5 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'kittens' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 1000 )
+		);
+
+		$this->store->deleteItemById( new ItemId( 'Q1001' ) );
+
+		$this->assertCount( 1, $this->store->getItemInfo(  10, 0 ) );
+	}
+
+	public function testGivenExistingId_deleteItemByIdDeletesItem() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q1000' )
+				->setRevisionId( '123456' )
+				->setItemType( 5 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'kittens' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 1000 )
+		);
+
+		$this->store->deleteItemById( new ItemId( 'Q1000' ) );
+
+		$this->assertCount( 0, $this->store->getItemInfo(  10, 0 ) );
 	}
 
 }

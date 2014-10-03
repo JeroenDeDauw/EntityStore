@@ -28,13 +28,23 @@ class ItemStore {
 		$this->tableName = $tableName;
 	}
 
-	private function dropItemById( ItemId $itemId ) {
-		$this->connection->delete(
-			$this->tableName,
-			[
-				'item_id' => $itemId->getNumericId()
-			]
-		);
+	/**
+	 * @param ItemId $itemId
+	 *
+	 * @throws EntityStoreException
+	 */
+	public function deleteItemById( ItemId $itemId ) {
+		try {
+			$this->connection->delete(
+				$this->tableName,
+				[
+					'item_id' => $itemId->getNumericId()
+				]
+			);
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
 	}
 
 	/**
@@ -43,9 +53,9 @@ class ItemStore {
 	 * @throws EntityStoreException
 	 */
 	public function storeItemRow( ItemRow $itemRow ) {
-		try {
-			$this->dropItemById( ItemId::newFromNumber( $itemRow->getNumericItemId() ) );
+		$this->deleteItemById( ItemId::newFromNumber( $itemRow->getNumericItemId() ) );
 
+		try {
 			$this->connection->insert(
 				$this->tableName,
 				[
