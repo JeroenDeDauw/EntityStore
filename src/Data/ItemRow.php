@@ -47,7 +47,8 @@ class ItemRow {
 			->setRevisionId( $this->getRevisionId() )
 			->setItemType( $this->getItemType() )
 			->setRevisionTime( $this->getRevisionTime() )
-			->setEnglishLabel( $this->getEnglishLabel() );
+			->setEnglishLabel( $this->getEnglishLabel() )
+			->setEnglishWikipediaTitle( $this->getEnglishWikipediaTitle() );
 	}
 
 }

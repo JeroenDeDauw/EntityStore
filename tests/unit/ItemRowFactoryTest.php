@@ -26,6 +26,7 @@ class ItemRowFactoryTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertSame( 64, $itemRow->getNumericItemId() );
 		$this->assertSame( 'Berlin', $itemRow->getEnglishLabel() );
+		$this->assertSame( 'Berlin', $itemRow->getEnglishWikipediaTitle() );
 		$this->assertSame( '["the","serialization"]', $itemRow->getItemJson() );
 		$this->assertSame( 42, $itemRow->getItemType() );
 	}

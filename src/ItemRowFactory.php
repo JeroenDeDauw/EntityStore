@@ -41,7 +41,8 @@ class ItemRowFactory {
 			->setEnglishLabel( $this->getEnglishLabel( $item ) )
 			->setItemType( $this->getItemType( $item ) )
 			->setNumericItemId( $item->getId()->getNumericId() )
-			->setItemJson( $this->getItemJson( $item ) );
+			->setItemJson( $this->getItemJson( $item ) )
+			->setEnglishWikipediaTitle( $this->getEnWikiTitle( $item ) );
 	}
 
 	private function getItemJson( Item $item ) {
@@ -56,6 +57,11 @@ class ItemRowFactory {
 		return $item->getFingerprint()->hasLabel( 'en' ) ?
 			$item->getFingerprint()->getLabel( 'en' )->getText()
 			: null;
+	}
+
+	private function getEnWikiTitle( Item $item ) {
+		return $item->getSiteLinkList()->hasLinkWithSiteId( 'enwiki' ) ?
+			$item->getSiteLinkList()->getBySiteId( 'enwiki' )->getPageName() : null;
 	}
 
 }

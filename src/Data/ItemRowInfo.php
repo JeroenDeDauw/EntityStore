@@ -17,6 +17,7 @@ trait ItemRowInfo {
 	private $revisionTime;
 	private $itemType;
 	private $enLabel;
+	private $enWikiTitle;
 
 	/**
 	 * @param string|null $enLabel
@@ -73,6 +74,15 @@ trait ItemRowInfo {
 	}
 
 	/**
+	 * @param string|null $enWikiTitle
+	 * @return $this
+	 */
+	public function setEnglishWikipediaTitle( $enWikiTitle ) {
+		$this->enWikiTitle = $enWikiTitle;
+		return $this;
+	}
+
+	/**
 	 * @return string|null
 	 */
 	public function getEnglishLabel() {
@@ -112,6 +122,13 @@ trait ItemRowInfo {
 	 */
 	public function getRevisionTime() {
 		return $this->revisionTime;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getEnglishWikipediaTitle() {
+		return $this->enWikiTitle;
 	}
 
 }
