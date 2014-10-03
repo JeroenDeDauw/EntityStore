@@ -17,6 +17,12 @@ Running the tests
 
 ## Release notes
 
+### Version 0.6.0 (dev)
+
+* Added `ItemStore::deleteItemById`
+* Added `PropertyStore::deletePropertyById`
+* Inserting an item or a property will now cause any older versions to be deleted
+
 ### Version 0.5.4 (2014-09-08)
 
 * Added optional `$itemType` parameter to `ItemStore::getItemInfo`
