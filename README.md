@@ -17,11 +17,12 @@ Running the tests
 
 ## Release notes
 
-### Version 0.6.0 (dev)
+### Version 0.6.0 (2014-10-03)
 
 * Added `ItemStore::deleteItemById`
 * Added `PropertyStore::deletePropertyById`
 * Inserting an item or a property will now cause any older versions to be deleted
+* The ItemStore now indexes the enwiki sitelink
 
 ### Version 0.5.4 (2014-09-08)
 
