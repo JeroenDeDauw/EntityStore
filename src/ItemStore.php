@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Queryr\EntityStore\Data\ItemInfo;
 use Queryr\EntityStore\Data\ItemRow;
+use Wikibase\DataModel\Entity\ItemId;
 
 /**
  * @licence GNU GPL v2+
@@ -27,6 +28,15 @@ class ItemStore {
 		$this->tableName = $tableName;
 	}
 
+	private function dropItemById( ItemId $itemId ) {
+		$this->connection->delete(
+			$this->tableName,
+			[
+				'item_id' => $itemId->getNumericId()
+			]
+		);
+	}
+
 	/**
 	 * @param ItemRow $itemRow
 	 *
@@ -34,9 +44,11 @@ class ItemStore {
 	 */
 	public function storeItemRow( ItemRow $itemRow ) {
 		try {
+			$this->dropItemById( ItemId::newFromNumber( $itemRow->getNumericItemId() ) );
+
 			$this->connection->insert(
 				$this->tableName,
-				array(
+				[
 					'item_id' => $itemRow->getNumericItemId(),
 					'item_type' => $itemRow->getItemType(),
 					'item_label_en' => $itemRow->getEnglishLabel(),
@@ -46,7 +58,7 @@ class ItemStore {
 					'revision_time' => $itemRow->getRevisionTime(),
 
 					'item_json' => $itemRow->getItemJson(),
-				)
+				]
 			);
 		}
 		catch ( DBALException $ex ) {

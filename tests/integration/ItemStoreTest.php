@@ -206,4 +206,34 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( [], $this->store->getItemInfo( 10, 0, 1337 ) );
 	}
 
+	public function testInsertingExistingItemOverridesTheOriginalOne() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q1000' )
+				->setRevisionId( '123456' )
+				->setItemType( 5 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'kittens' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 1000 )
+		);
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q1000' )
+				->setRevisionId( '123456789' )
+				->setItemType( 4 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishLabel( 'cats' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 1000 )
+		);
+
+		$infoSets = $this->store->getItemInfo(  10, 0 );
+		$this->assertCount( 1, $infoSets );
+		$this->assertSame( 4, $infoSets[0]->getItemType() );
+	}
+
 }
