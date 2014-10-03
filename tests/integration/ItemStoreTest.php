@@ -59,6 +59,7 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 			->setItemType( 1 )
 			->setRevisionTime( '2014-02-27T11:40:12Z' )
 			->setEnglishLabel( 'kittens' )
+			->setEnglishWikipediaTitle( 'cats' )
 			->setItemJson( 'json be here' )
 			->setNumericItemId( self::ITEM_ID );
 	}
@@ -79,6 +80,7 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( $this->itemRow->getRevisionTime(), $newItemRow->getRevisionTime() );
 		$this->assertSame( $this->itemRow->getItemType(), $newItemRow->getItemType() );
 		$this->assertSame( $this->itemRow->getEnglishLabel(), $newItemRow->getEnglishLabel() );
+		$this->assertSame( $this->itemRow->getEnglishWikipediaTitle(), $newItemRow->getEnglishWikipediaTitle() );
 	}
 
 	public function testGivenNotKnownId_getItemRowByNumericItemIdReturnsNull() {

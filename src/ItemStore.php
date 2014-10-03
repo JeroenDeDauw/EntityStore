@@ -43,6 +43,7 @@ class ItemStore {
 					'item_id' => $itemRow->getNumericItemId(),
 					'item_type' => $itemRow->getItemType(),
 					'item_label_en' => $itemRow->getEnglishLabel(),
+					'wp_title_en' => $itemRow->getEnglishWikipediaTitle(),
 
 					'page_title' => $itemRow->getPageTitle(),
 					'revision_id' => $itemRow->getRevisionId(),
@@ -103,7 +104,8 @@ class ItemStore {
 			't.revision_id',
 			't.revision_time',
 			't.item_type',
-			't.item_label_en'
+			't.item_label_en',
+			't.wp_title_en'
 		)->from( $this->tableName, 't' );
 	}
 
@@ -123,6 +125,7 @@ class ItemStore {
 			->setRevisionId( $row['revision_id'] )
 			->setRevisionTime( $row['revision_time'] )
 			->setItemType( $row['item_type'] )
+			->setEnglishWikipediaTitle( $row['wp_title_en'] )
 			->setEnglishLabel( $row['item_label_en'] );
 	}
 
@@ -133,6 +136,7 @@ class ItemStore {
 			->setRevisionId( $row['revision_id'] )
 			->setRevisionTime( $row['revision_time'] )
 			->setItemType( $row['item_type'] )
+			->setEnglishWikipediaTitle( $row['wp_title_en'] )
 			->setEnglishLabel( $row['item_label_en'] );
 	}
 
@@ -143,7 +147,8 @@ class ItemStore {
 			't.revision_id',
 			't.revision_time',
 			't.item_type',
-			't.item_label_en'
+			't.item_label_en',
+			't.wp_title_en'
 		)->from( $this->tableName, 't' );
 	}
 
