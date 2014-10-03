@@ -39,12 +39,14 @@ class EntityStoreInstaller {
 		$table->addColumn( 'revision_time', Type::STRING, [ 'length' => 25 ] );
 		$table->addColumn( 'item_json', Type::BLOB );
 		$table->addColumn( 'item_label_en', Type::STRING, [ 'length' => 255, 'notnull' => false ] );
+		$table->addColumn( 'wp_title_en', Type::STRING, [ 'length' => 255, 'notnull' => false ] );
 
 		$table->addIndex( [ 'item_id' ] );
 		$table->addIndex( [ 'item_type' ] );
 		$table->addIndex( [ 'page_title' ] );
 		$table->addIndex( [ 'revision_id' ] );
 		$table->addIndex( [ 'revision_time' ] );
+		$table->addIndex( [ 'wp_title_en' ] );
 
 		return $table;
 	}
