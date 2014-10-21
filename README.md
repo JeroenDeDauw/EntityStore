@@ -17,6 +17,10 @@ Running the tests
 
 ## Release notes
 
+### Version 0.6.1 (2014-10-21)
+
+* Allow installation together with DataModel 2.x
+
 ### Version 0.6.0 (2014-10-03)
 
 * Added `ItemStore::deleteItemById`

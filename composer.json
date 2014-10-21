@@ -6,7 +6,7 @@
 		"ext-PDO": "*",
 
 		"doctrine/dbal": "~2.4",
-		"wikibase/data-model": "~1.0",
+		"wikibase/data-model": "~2.0|~1.0",
 		"serialization/serialization": "~3.2"
 	},
 	"require-dev": {
