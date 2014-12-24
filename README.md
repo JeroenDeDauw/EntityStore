@@ -17,6 +17,10 @@ Running the tests
 
 ## Release notes
 
+### Version 0.6.2 (2014-12-24)
+
+* Wikibase DataModel 1.x is no longer supported
+
 ### Version 0.6.1 (2014-10-21)
 
 * Allow installation together with DataModel 2.x

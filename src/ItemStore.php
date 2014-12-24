@@ -85,7 +85,7 @@ class ItemStore {
 	public function getItemRowByNumericItemId( $numericItemId ) {
 		try {
 			$rows = $this->selectItems()
-				->where( 't.item_id = ?' )
+				->where( 'item_id = ?' )
 				->setParameter( 0, (int)$numericItemId )
 				->execute();
 		}
@@ -98,14 +98,14 @@ class ItemStore {
 
 	private function selectItems() {
 		return $this->connection->createQueryBuilder()->select(
-			't.item_id',
-			't.item_json',
-			't.page_title',
-			't.revision_id',
-			't.revision_time',
-			't.item_type',
-			't.item_label_en',
-			't.wp_title_en'
+			'item_id',
+			'item_json',
+			'page_title',
+			'revision_id',
+			'revision_time',
+			'item_type',
+			'item_label_en',
+			'wp_title_en'
 		)->from( $this->tableName, 't' );
 	}
 
@@ -142,14 +142,14 @@ class ItemStore {
 
 	private function selectItemInfoSets() {
 		return $this->connection->createQueryBuilder()->select(
-			't.item_id',
-			't.page_title',
-			't.revision_id',
-			't.revision_time',
-			't.item_type',
-			't.item_label_en',
-			't.wp_title_en'
-		)->from( $this->tableName, 't' );
+			'item_id',
+			'page_title',
+			'revision_id',
+			'revision_time',
+			'item_type',
+			'item_label_en',
+			'wp_title_en'
+		)->from( $this->tableName );
 	}
 
 	/**
@@ -162,12 +162,12 @@ class ItemStore {
 	 */
 	public function getItemInfo( $limit, $offset, $itemType = null ) {
 		$query = $this->selectItemInfoSets()
-			->orderBy( 't.item_id', 'asc' )
+			->orderBy( 'item_id', 'asc' )
 			->setMaxResults( $limit )
 			->setFirstResult( $offset );
 
 		if ( is_int( $itemType ) ) {
-			$query->where( 't.item_type = ?' )->setParameter( 0, $itemType );
+			$query->where( 'item_type = ?' )->setParameter( 0, $itemType );
 		}
 
 		try {
@@ -200,10 +200,10 @@ class ItemStore {
 	public function getItemTypes( $limit = 100, $offset = 0 ) {
 		try {
 			$rows = $this->connection->createQueryBuilder()
-				->select( 'DISTINCT t.item_type' )
+				->select( 'DISTINCT item_type' )
 				->from( $this->tableName, 't' )
-				->where( 't.item_type IS NOT NULL' )
-				->orderBy( 't.item_type', 'ASC' )
+				->where( 'item_type IS NOT NULL' )
+				->orderBy( 'item_type', 'ASC' )
 				->setMaxResults( $limit )
 				->setFirstResult( $offset )
 				->execute();

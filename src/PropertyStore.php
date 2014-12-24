@@ -84,7 +84,7 @@ class PropertyStore {
 	public function getPropertyRowByNumericPropertyId( $numericPropertyId ) {
 		try {
 			$rows = $this->selectProperties()
-				->where( 't.property_id = ?' )
+				->where( 'property_id = ?' )
 				->setParameter( 0, (int)$numericPropertyId )
 				->execute();
 		}
@@ -97,13 +97,13 @@ class PropertyStore {
 
 	private function selectProperties() {
 		return $this->connection->createQueryBuilder()->select(
-			't.property_id',
-			't.property_json',
-			't.page_title',
-			't.revision_id',
-			't.revision_time',
-			't.property_type'
-		)->from( $this->tableName, 't' );
+			'property_id',
+			'property_json',
+			'page_title',
+			'revision_id',
+			'revision_time',
+			'property_type'
+		)->from( $this->tableName );
 	}
 
 	private function newPropertyRowFromResult( \Traversable $rows ) {
@@ -133,12 +133,12 @@ class PropertyStore {
 
 	private function selectPropertyInfoSets() {
 		return $this->connection->createQueryBuilder()->select(
-			't.property_id',
-			't.page_title',
-			't.revision_id',
-			't.revision_time',
-			't.property_type'
-		)->from( $this->tableName, 't' );
+			'property_id',
+			'page_title',
+			'revision_id',
+			'revision_time',
+			'property_type'
+		)->from( $this->tableName );
 	}
 
 	/**
@@ -151,7 +151,7 @@ class PropertyStore {
 	public function getPropertyInfo( $limit, $offset ) {
 		try {
 			$rows = $this->selectPropertyInfoSets()
-				->orderBy( 't.property_id', 'asc' )
+				->orderBy( 'property_id', 'asc' )
 				->setMaxResults( $limit )
 				->setFirstResult( $offset )
 				->execute();
