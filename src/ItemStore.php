@@ -106,7 +106,7 @@ class ItemStore {
 			'item_type',
 			'item_label_en',
 			'wp_title_en'
-		)->from( $this->tableName, 't' );
+		)->from( $this->tableName );
 	}
 
 	private function newItemRowFromResult( \Traversable $rows ) {
@@ -201,7 +201,7 @@ class ItemStore {
 		try {
 			$rows = $this->connection->createQueryBuilder()
 				->select( 'DISTINCT item_type' )
-				->from( $this->tableName, 't' )
+				->from( $this->tableName )
 				->where( 'item_type IS NOT NULL' )
 				->orderBy( 'item_type', 'ASC' )
 				->setMaxResults( $limit )
@@ -223,6 +223,33 @@ class ItemStore {
 		}
 
 		return $types;
+	}
+
+	/**
+	 * @param string $pageName
+	 *
+	 * @return ItemId|null
+	 * @throws EntityStoreException
+	 */
+	public function getIdForEnWikiPage( $pageName ) {
+		try {
+			$rows = $this->connection->createQueryBuilder()
+				->select( 'item_id' )
+				->from( $this->tableName )
+				->where( 'wp_title_en = ?' )
+				->setParameter( 0, $pageName )
+				->setMaxResults( 1 )
+				->execute();
+		}
+		catch ( DBALException $ex ) {
+			throw new EntityStoreException( $ex->getMessage(), $ex );
+		}
+
+		foreach ( $rows as $row ) {
+			return ItemId::newFromNumber( $row['item_id'] );
+		}
+
+		return null;
 	}
 
 }

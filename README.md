@@ -20,6 +20,7 @@ Running the tests
 ### Version 0.6.2 (2014-12-24)
 
 * Wikibase DataModel 1.x is no longer supported
+* Added `ItemStore::getIdForEnWikiPage`
 
 ### Version 0.6.1 (2014-10-21)
 

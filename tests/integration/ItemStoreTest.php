@@ -283,4 +283,58 @@ class ItemStoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertCount( 0, $this->store->getItemInfo(  10, 0 ) );
 	}
 
+	public function testGivenNotExistingPage_getIdForEnWikiPageReturnsNull() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->assertNull( $this->store->getIdForEnWikiPage( 'kittens' ) );
+	}
+
+	public function testWhenStoreNotInitialized_getIdForEnWikiPageThrowsException() {
+		$this->createStore( self::WITHOUT_INSTALLING );
+		$this->setExpectedException( 'Queryr\EntityStore\EntityStoreException' );
+		$this->assertNull( $this->store->getIdForEnWikiPage( 'kittens' ) );
+	}
+
+	public function testGivenExistingPage_getIdForEnWikiPageReturnsPage() {
+		$this->createStore( self::AND_INSTALL );
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q55555' )
+				->setRevisionId( '55555555' )
+				->setItemType( 5 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishWikipediaTitle( 'cats' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 55555 )
+		);
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q1000' )
+				->setRevisionId( '123456' )
+				->setItemType( 1 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishWikipediaTitle( 'kittens' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 1000 )
+		);
+
+		$this->store->storeItemRow(
+			( new ItemRow() )
+				->setPageTitle( 'Item:Q999999' )
+				->setRevisionId( '9999999' )
+				->setItemType( 9 )
+				->setRevisionTime( '2014-02-27T11:40:12Z' )
+				->setEnglishWikipediaTitle( 'fluff' )
+				->setItemJson( 'json be here' )
+				->setNumericItemId( 999999 )
+		);
+
+		$this->assertEquals(
+			new ItemId( 'Q1000' ),
+			$this->store->getIdForEnWikiPage( 'kittens' )
+		);
+	}
+
 }

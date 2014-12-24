@@ -41,9 +41,9 @@ class PropertyTypeLookup {
 
 	private function buildQuery( PropertyId $id ) {
 		return $this->connection->createQueryBuilder()
-			->select( 't.property_type' )
-			->from( $this->tableName, 't' )
-			->where( 't.property_id = ?' )
+			->select( 'property_type' )
+			->from( $this->tableName )
+			->where( 'property_id = ?' )
 			->setParameter( 0, (int)$id->getNumericId() );
 	}
 
