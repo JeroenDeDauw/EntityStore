@@ -13,6 +13,8 @@ use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 
 /**
  * @covers Queryr\EntityStore\EntityStore
+ * @covers Queryr\EntityStore\ItemStore
+ * @covers Queryr\EntityStore\PropertyStore
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
