@@ -20,7 +20,7 @@ class InstanceOfTypeExtractorTest extends \PHPUnit_Framework_TestCase {
 	const INSTANCEOF_PROP_ID = 31;
 
 	public function testGivenEmptyItem_nullIsReturned() {
-		$this->assertNull( ( new InstanceOfTypeExtractor() )->getTypeOfItem( Item::newEmpty() ) );
+		$this->assertNull( ( new InstanceOfTypeExtractor() )->getTypeOfItem( new Item() ) );
 	}
 
 	public function testGivenBerlin_then515isReturned() {

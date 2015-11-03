@@ -20,7 +20,6 @@
 	],
 	"require": {
 		"php": ">=5.5.0",
-		"ext-mysql": "*",
 		"ext-PDO": "*",
 
 		"doctrine/dbal": "~2.5",
