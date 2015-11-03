@@ -30,7 +30,7 @@ For a full CI run
 
 ## Release notes
 
-### Version 1.0.0 (2015-11-03)
+### Version 1.0.0 (2015-11-04)
 
 * Added support for Wikibase DataModel 4.x and 3.x
 * Changed minimum Wikibase DataModel version to 2.5
