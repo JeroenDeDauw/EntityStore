@@ -1,4 +1,10 @@
-# QueryR Entity Store
+# QueryR EntityStore
+
+[![Build Status](https://secure.travis-ci.org/JeroenDeDauw/EntityStore.png?branch=master)](http://travis-ci.org/JeroenDeDauw/EntityStore)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/JeroenDeDauw/EntityStore/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/JeroenDeDauw/EntityStore/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/JeroenDeDauw/EntityStore/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/JeroenDeDauw/EntityStore/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/queryr/entity-store/version.png)](https://packagist.org/packages/queryr/entity-store)
+[![Download count](https://poser.pugx.org/queryr/entity-store/d/total.png)](https://packagist.org/packages/queryr/entity-store)
 
 Provides persistence and basic lookup capabilities for collections of
 [Wikibase](http://wikiba.se) entities.
@@ -16,6 +22,12 @@ Running the tests
     phpunit
 
 ## Release notes
+
+### Version 1.0.0 (2015-11-03)
+
+* Added support for Wikibase DataModel 4.x and 3.x
+* Changed minimum Wikibase DataModel version to 2.5
+* Added ci command that runs PHPUnit, PHPCS, PHPMD and covers tags validation
 
 ### Version 0.6.2 (2014-12-24)
 

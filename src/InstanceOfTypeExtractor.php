@@ -42,6 +42,7 @@ class InstanceOfTypeExtractor implements ItemTypeExtractor {
 				if ( $valueSnak instanceof PropertyValueSnak ) {
 					$value = $valueSnak->getDataValue();
 
+
 					if ( $value instanceof EntityIdValue ) {
 
 						$itemId = $value->getEntityId();

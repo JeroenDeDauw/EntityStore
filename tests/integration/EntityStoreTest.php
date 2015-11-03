@@ -22,7 +22,7 @@ class EntityStoreTest extends \PHPUnit_Framework_TestCase {
 
 	const ITEM_ID = '1337';
 	const PROPERTY_ID = '42';
-	
+
 	const AND_INSTALL = true;
 	const WITHOUT_INSTALLING = false;
 

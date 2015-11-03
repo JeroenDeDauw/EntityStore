@@ -23,7 +23,7 @@ use Wikibase\DataModel\Entity\PropertyId;
 class PropertyStoreTest extends \PHPUnit_Framework_TestCase {
 
 	const PROPERTY_ID = '42';
-	
+
 	const AND_INSTALL = true;
 	const WITHOUT_INSTALLING = false;
 
