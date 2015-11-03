@@ -12,14 +12,21 @@ Provides persistence and basic lookup capabilities for collections of
 ## System dependencies
 
 * PHP 5.5 or later
-* php5-mysql
 * php5-sqlite (only needed for running the tests)
 
 ## Running the tests
 
-Running the tests
+For tests only
 
-    phpunit
+    composer test
+
+For style checks only
+
+	composer cs
+
+For a full CI run
+
+	composer ci
 
 ## Release notes
 
