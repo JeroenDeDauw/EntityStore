@@ -2,8 +2,6 @@
 
 namespace Queryr\EntityStore;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 use Queryr\EntityStore\Data\ItemInfo;
 use Queryr\EntityStore\Data\ItemRow;
 use Queryr\EntityStore\Data\PropertyInfo;

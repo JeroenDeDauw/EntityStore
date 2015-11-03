@@ -3,7 +3,6 @@
 namespace Tests\Queryr\EntityStore\Fixtures;
 
 use Doctrine\DBAL\DriverManager;
-use PDO;
 
 class TestFixtureFactory {
 

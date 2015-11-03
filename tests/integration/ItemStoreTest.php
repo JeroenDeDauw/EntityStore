@@ -2,15 +2,12 @@
 
 namespace Tests\Queryr\EntityStore;
 
-use Queryr\EntityStore\Data\ItemInfo;
 use Queryr\EntityStore\Data\ItemRow;
 use Queryr\EntityStore\EntityStoreConfig;
 use Queryr\EntityStore\EntityStoreFactory;
 use Queryr\EntityStore\EntityStoreInstaller;
-use Queryr\EntityStore\ItemRowFactory;
 use Queryr\EntityStore\ItemStore;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
-use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 
 /**

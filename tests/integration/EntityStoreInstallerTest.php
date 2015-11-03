@@ -4,8 +4,8 @@ namespace Tests\Queryr\EntityStore;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Queryr\EntityStore\EntityStoreConfig;
-use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 use Queryr\EntityStore\EntityStoreInstaller;
+use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
 
 /**
  * @covers Queryr\EntityStore\EntityStoreInstaller

@@ -2,16 +2,13 @@
 
 namespace Tests\Queryr\EntityStore;
 
-use Queryr\EntityStore\Data\ItemInfo;
 use Queryr\EntityStore\Data\PropertyInfo;
-use Queryr\EntityStore\EntityStoreConfig;
 use Queryr\EntityStore\Data\PropertyRow;
+use Queryr\EntityStore\EntityStoreConfig;
 use Queryr\EntityStore\EntityStoreFactory;
 use Queryr\EntityStore\EntityStoreInstaller;
 use Queryr\EntityStore\PropertyStore;
 use Tests\Queryr\EntityStore\Fixtures\TestFixtureFactory;
-use Queryr\EntityStore\Data\ItemRow;
-use Queryr\EntityStore\EntityStore;
 use Wikibase\DataModel\Entity\PropertyId;
 
 /**
