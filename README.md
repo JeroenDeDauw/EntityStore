@@ -11,7 +11,7 @@ Provides persistence and basic lookup capabilities for collections of
 
 ## System dependencies
 
-* PHP 5.5 or later
+* PHP 5.5 or later (PHP 7 and HHVM are supported)
 * php5-sqlite (only needed for running the tests)
 
 ## Running the tests
