@@ -19,7 +19,7 @@ Provides persistence and basic lookup capabilities for collections of
 To add this package as a local, per-project dependency to your project, simply add a
 dependency on `queryr/entity-store` to your project's `composer.json` file.
 Here is a minimal example of a `composer.json` file that just defines a dependency on
-EntitySTore 1.x:
+EntityStore 1.x:
 
 ```js
 {
