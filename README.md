@@ -14,6 +14,21 @@ Provides persistence and basic lookup capabilities for collections of
 * PHP 5.5 or later (PHP 7 and HHVM are supported)
 * php5-sqlite (only needed for running the tests)
 
+## Installation
+
+To add this package as a local, per-project dependency to your project, simply add a
+dependency on `queryr/entity-store` to your project's `composer.json` file.
+Here is a minimal example of a `composer.json` file that just defines a dependency on
+EntitySTore 1.x:
+
+```js
+{
+    "require": {
+        "queryr/entity-store": "~1.0"
+    }
+}
+```
+
 ## Running the tests
 
 For tests only
