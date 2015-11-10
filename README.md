@@ -29,6 +29,22 @@ EntityStore 1.x:
 }
 ```
 
+## Usage
+
+All services are constructed via the `EntityStoreFactory` class:
+
+```php
+use Queryr\EntityStoreEntityStoreFactory;
+$factory = new EntityStoreFactory(
+	$dbalConnection,
+	new EntityStoreConfig( /* optional config */ )
+);
+```
+
+`$dbalConnection` is a `Connection` object from [Doctrine DBAL](https://github.com/doctrine/dbal).
+
+
+
 ## Running the tests
 
 For tests only
