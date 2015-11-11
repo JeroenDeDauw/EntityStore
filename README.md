@@ -68,6 +68,9 @@ Next to `ItemRow` there also is `ItemInfo`, which is identical, apart for not ha
 
 ### Querying values
 
+This list is incomplete and serves mainly to give you an idea of what this library contains.
+To get a full list, look at the services you can construct via the store, and their interfaces.
+
 **Fetching an Item by id**
 
 ```php
