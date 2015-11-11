@@ -92,10 +92,10 @@ Get cheaply retrievable info on the first 100 items.
 $itemInfoList = $itemStore->getItemInfo( 100, 0 );
 ```
 
-Get cheaply retrievable info on the first 100 items of type "book", assuming 4242 is the numeric id of "book".
+Restrict the result to items of type "book", assuming 424242 is the numeric id of "book".
 
 ```php
-$itemInfoList = $itemStore->getItemInfo( 100, 0, 4242 );
+$itemInfoList = $itemStore->getItemInfo( 100, 0, 424242 );
 ```
 
 **List item types**
