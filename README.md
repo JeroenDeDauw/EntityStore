@@ -31,6 +31,8 @@ EntityStore 1.x:
 
 ## Usage
 
+If you are curious what the database schema is, look at `src/EntityStoreInstaller.php`.
+
 All services are constructed via the `EntityStoreFactory` class:
 
 ```php
