@@ -34,7 +34,7 @@ EntityStore 1.x:
 All services are constructed via the `EntityStoreFactory` class:
 
 ```php
-use Queryr\EntityStoreEntityStoreFactory;
+use Queryr\EntityStore\EntityStoreFactory;
 $factory = new EntityStoreFactory(
 	$dbalConnection,
 	new EntityStoreConfig( /* optional config */ )
@@ -43,7 +43,65 @@ $factory = new EntityStoreFactory(
 
 `$dbalConnection` is a `Connection` object from [Doctrine DBAL](https://github.com/doctrine/dbal).
 
+### Writing values
 
+For writing values, you will need either `ItemStore` or `PropertyStore`.
+
+```php
+$itemStore = $factory->newItemStore();
+$propertyStore = $factory->newPropertyStore();
+```
+
+The main write methods are "store document" and "remove document by id".
+
+```php
+$itemStore->storeItemRow( $itemRow );
+$itemStore->deleteItemById( $itemId );
+```
+
+Note that `$itemRow` is of type `ItemRow`, which is defined by this component. `ItemRow` represents
+all values in a row of the items table. It does not require having a fully instantiated Wikibase
+DataModel `EntityDocument` object, you just need the JSON.
+
+Next to `ItemRow` there also is `ItemInfo`, which is identical, apart for not having the JSON.
+(Internally these share code via the package private trait `ItemRowInfo`.)
+
+### Querying values
+
+**Fetching an Item by id**
+
+```php
+$q42 = $itemStore->getItemRowByNumericItemId( 42 );
+```
+
+**Property data type lookup**
+
+```php
+$lookup = $factory->newPropertyTypeLookup();
+$propertyType = $lookup->getTypeOfProperty( $propertyId );
+```
+
+**List item info**
+
+Get cheaply retrievable info on the first 100 items.
+
+```php
+$itemInfoList = $itemStore->getItemInfo( 100, 0 );
+```
+
+Get cheaply retrievable info on the first 100 items of type "book", assuming 424242 is the numeric id of "book".
+
+```php
+$itemInfoList = $itemStore->getItemInfo( 100, 0, 424242 );
+```
+
+**List item types**
+
+This will get you numeric item ids that represent the types of the items ("instance of") in the system.
+
+```php
+$itemTypes = $itemStore->getItemTypes();
+```
 
 ## Running the tests
 

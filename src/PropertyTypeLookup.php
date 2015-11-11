@@ -26,6 +26,12 @@ class PropertyTypeLookup {
 		$this->tableName = $tableName;
 	}
 
+	/**
+	 * @param PropertyId $id
+	 *
+	 * @return string|null
+	 * @throws PropertyTypeLookupException
+	 */
 	public function getTypeOfProperty( PropertyId $id ) {
 		$query = $this->buildQuery( $id );
 
