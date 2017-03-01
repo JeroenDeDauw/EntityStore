@@ -124,6 +124,10 @@ For a full CI run
 
 ## Release notes
 
+### Version 1.1.0 (2017-02-28)
+
+* Added support for Wikibase DataModel 6.x and 5.x
+
 ### Version 1.0.0 (2015-11-04)
 
 * Added support for Wikibase DataModel 4.x and 3.x
