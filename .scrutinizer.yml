@@ -10,7 +10,6 @@ checks:
         duplication: true
 
 tools:
-tools:
     external_code_coverage: true
     php_code_sniffer: true
     php_cpd: true
